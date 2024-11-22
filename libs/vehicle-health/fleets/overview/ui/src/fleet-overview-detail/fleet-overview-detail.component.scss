@@ -1,0 +1,50 @@
+.fleet-overview-detail {
+  padding: 1rem;
+
+  &__table {
+    width: 100%;
+  }
+
+  td {
+    padding: 0 0.1rem;
+  }
+
+  .divider td {
+    padding-top: 1rem;
+  }
+
+  .name {
+    color: #71767c;
+    font-size: 12px;
+
+    th {
+      font-weight: normal;
+    }
+  }
+
+  .value {
+    vertical-align: top;
+  }
+
+  .location {
+    color: #fd1616;
+  }
+
+  th {
+    &.source {
+      width: 10%;
+    }
+    &.fault-code {
+      width: 20%;
+    }
+    &.fault-text {
+      width: 40%;
+    }
+    &.affected-system {
+      width: auto;
+    }
+    &.age-of-issue {
+      width: 10%;
+    }
+  }
+}

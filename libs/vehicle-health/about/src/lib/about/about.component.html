@@ -1,0 +1,58 @@
+<section class="section">
+  <h2 class="section__title" i18n>Version Number</h2>
+  <div class="version">
+    <p>
+      <span class="version__label" i18n>Current Version: </span>
+      <span class="version__value">{{ changelogs[0].version }}</span>
+    </p>
+    <p>
+      <span class="version__label" i18n>Released Date: </span>
+      <span class="version__value">
+        {{ changelogs[0].releaseDate | date: 'mediumDate' }}
+      </span>
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section__title" i18n>Version Changelog</h2>
+  @for (changelog of changelogs; track changelog.version) {
+    <div class="changelog">
+      <h3 class="changelog__title">
+        {{ changelog.version }} ({{
+          changelog.releaseDate | date: 'mediumDate'
+        }})
+      </h3>
+
+      <ul class="changelog__list">
+        @for (log of changelog.logs; track log.id) {
+          <li class="changelog__item">
+            <span class="changelog__description">{{ log.name }} </span>
+            <span class="changelog__id">{{ log.id }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+</section>
+
+<section class="section">
+  <h2 class="section__title" i18n>Name and Address</h2>
+  <div class="info">
+    <p class="info__name">Robert Bosch GmbH</p>
+    <address class="info__address">Robert-Bosch-Platz 1</address>
+    <address class="info__address">70839 Gerlingen-Schillerhöhe</address>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section__title" i18n>Members of the Board of Management</h2>
+  <ul class="section__list">
+    <li class="section__item">Dr. Stefan Hartung</li>
+    <li class="section__item">Dr. Christian Fischer</li>
+    <li class="section__item">Dr. Stefan Grosch</li>
+    <li class="section__item">Dr. Markus Forschner</li>
+    <li class="section__item">Dr. Markus Heyn</li>
+    <li class="section__item">Dr. Tanja Rückert</li>
+  </ul>
+</section>

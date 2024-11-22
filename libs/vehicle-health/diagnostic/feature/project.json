@@ -1,0 +1,25 @@
+{
+  "name": "vehicle-health-diagnostic-feature",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/vehicle-health/diagnostic/feature/src",
+  "prefix": "vh",
+  "projectType": "library",
+  "tags": [
+    "type:feature",
+    "scope:vehicle-health"
+  ],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "libs/vehicle-health/fleets/overview/feature/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

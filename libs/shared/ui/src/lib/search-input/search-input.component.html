@@ -1,0 +1,16 @@
+<form
+  class="search-form no-validation"
+  [formGroup]="form"
+  (submit)="onSearch()"
+>
+  <mat-form-field class="w-100">
+    @if (label) {
+      <mat-label>{{ label }}</mat-label>
+    }
+    <input matInput formControlName="search" [placeholder]="placeholder" />
+    @if (form.controls.search.value) {
+      <mat-icon matSuffix (click)="onClear()" fontIcon="bosch-ic-close" />
+    }
+    <mat-icon matSuffix (click)="onSearch()" fontIcon="bosch-ic-search" />
+  </mat-form-field>
+</form>

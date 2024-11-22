@@ -1,0 +1,19 @@
+.dialog-container {
+  max-width: 100%;
+  display: contents;
+}
+
+.disclaimer-dialog {
+  &-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.625rem;
+  }
+
+  &-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+}

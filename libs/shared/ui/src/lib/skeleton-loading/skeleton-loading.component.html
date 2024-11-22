@@ -1,0 +1,11 @@
+<div class="skeleton-loading__wrapper">
+  @for (count of countItems; track count) {
+    <div
+      class="skeleton-loading__item"
+      [style]="theme"
+      [class]="shape"
+      [style.width]="width"
+      [style.height]="height"
+    ></div>
+  }
+</div>

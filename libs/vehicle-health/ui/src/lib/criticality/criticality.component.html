@@ -1,0 +1,10 @@
+@if (criticality() | criticality; as criticality) {
+  <div class="criticality">
+    <mat-icon
+      [fontIcon]="criticality.icon"
+      [style.color]="criticality.color"
+      [matTooltip]="criticality.value"
+    >
+    </mat-icon>
+  </div>
+}

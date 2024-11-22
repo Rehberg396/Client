@@ -1,0 +1,66 @@
+@if (dtcTemplate) {
+  <div class="recommendation">
+    <div class="recommendation__title">
+      {{ dtcTemplate.dtcCode }} -
+      @if (dtcTemplate.description) {
+        {{ dtcTemplate.description }}
+      } @else {
+        <ng-container i18n>No Description</ng-container>
+      }
+    </div>
+
+    <div class="recommendation__detail">
+      <div class="left">
+        <vh-detail-description-item i18n-title title="Possible Causes">
+          @if (dtcTemplate.possibleCause) {
+            {{ dtcTemplate.possibleCause }}
+          } @else {
+            <vh-not-available />
+          }
+        </vh-detail-description-item>
+
+        <vh-detail-description-item i18n-title title="Possible Symptoms">
+          @if (dtcTemplate.symptom) {
+            {{ dtcTemplate.symptom }}
+          } @else {
+            <vh-not-available />
+          }
+        </vh-detail-description-item>
+      </div>
+
+      <div class="middle">
+        <vh-detail-description-item i18n-title title="Last Updated">
+          @if (dtcTemplate.lastUpdated) {
+            {{ dtcTemplate.lastUpdated | date: 'full' }}
+          } @else {
+            <vh-not-available />
+          }
+        </vh-detail-description-item>
+
+        <vh-detail-description-item i18n-title title="Recommendations">
+          @if (
+            dtcTemplate.recommendations && dtcTemplate.recommendations.length
+          ) {
+            @for (recommend of dtcTemplate.recommendations; track recommend) {
+              <ul style="list-style-type: none">
+                <li>{{ recommend }}</li>
+              </ul>
+            }
+          } @else {
+            <vh-not-available />
+          }
+        </vh-detail-description-item>
+      </div>
+
+      <div class="right">
+        <vh-detail-description-item i18n-title title="Criticality">
+          @if (dtcTemplate.criticality) {
+            <vh-criticality [value]="dtcTemplate.criticality" />
+          } @else {
+            <vh-not-available />
+          }
+        </vh-detail-description-item>
+      </div>
+    </div>
+  </div>
+}

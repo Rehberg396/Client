@@ -1,0 +1,62 @@
+<mat-form-field [class]="cssClass">
+  <mat-label>{{ label }}</mat-label>
+  @if (useTextArea) {
+    <textarea
+      matInput
+      rows="10"
+      style="resize: none"
+      [type]="type"
+      [disabled]="isDisabled"
+      [errorStateMatcher]="errorMatcher"
+      [(ngModel)]="value"
+      [required]="isRequired"
+      (ngModelChange)="onModelChange($event)"
+      (blur)="onTouch()"
+    >
+    </textarea>
+  } @else {
+    <input
+      matInput
+      [type]="type"
+      [disabled]="isDisabled"
+      [errorStateMatcher]="errorMatcher"
+      [(ngModel)]="value"
+      [required]="isRequired"
+      (ngModelChange)="onModelChange($event)"
+      (blur)="onTouch()"
+    />
+  }
+
+  @if (errorMsg) {
+    <mat-error>
+      {{ errorMsg }}
+    </mat-error>
+  } @else if (ngControl && ngControl.errors) {
+    <mat-error>
+      @if (ngControl.hasError('required')) {
+        <ng-container i18n>Required</ng-container>
+      }
+      @if (ngControl.getError('maxlength')) {
+        <ng-container i18n>
+          Exceeds {{ ngControl.errors['maxlength'].requiredLength }} characters
+        </ng-container>
+      }
+      @if (ngControl.getError('pattern')) {
+        <ng-container i18n>Invalid</ng-container>
+      }
+      @if (ngControl.getError('minlength')) {
+        <ng-container i18n
+          >Required at least
+          {{
+            ngControl.errors['minlength'].requiredLength
+          }}
+          characters</ng-container
+        >
+      }
+      @if (ngControl.getError('email')) {
+        <ng-container i18n>Invalid email</ng-container>
+      }
+    </mat-error>
+  }
+</mat-form-field>
+<ng-content></ng-content>

@@ -1,0 +1,11 @@
+@if (item) {
+  @if (item.type === 'dtcTemplate') {
+    @if (item.status === 'loaded') {
+      <vh-expand-icon [expanded]="expanded" (click)="toggle.emit($event)" />
+    }
+  } @else if (item.type === 'powertrain-anomaly') {
+    @if (!isHealthy) {
+      <vh-expand-icon [expanded]="expanded" (click)="toggle.emit($event)" />
+    }
+  }
+}

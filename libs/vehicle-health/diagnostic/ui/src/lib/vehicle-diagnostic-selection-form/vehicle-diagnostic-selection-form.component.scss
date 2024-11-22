@@ -1,0 +1,8 @@
+.selection_form {
+  &__content {
+    &__table-paginator {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

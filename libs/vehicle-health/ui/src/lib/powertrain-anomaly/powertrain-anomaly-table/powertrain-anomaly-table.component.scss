@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  flex-direction: column;
+
+  .anomaly-table {
+    text-align: left;
+    border-collapse: collapse;
+
+    th,
+    td {
+      border: 1px solid #dddddd;
+      padding: 0.75rem;
+    }
+
+    td {
+      &.content {
+        padding-left: 0.75rem;
+      }
+
+      &.text-center {
+        text-align: center;
+      }
+    }
+
+    tr:hover {
+      background-color: unset !important;
+    }
+  }
+}

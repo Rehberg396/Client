@@ -1,0 +1,13 @@
+<div class="vehicle-type">
+  <span>
+    <span i18n-matTooltip matTooltip="Manufacturer Name">
+      {{ manufacturerName }}
+    </span>
+    @if (manufacturerName && modelLine) {
+      <span> - </span>
+    }
+    <span i18n-matTooltip matTooltip="Model Line">
+      {{ modelLine }}
+    </span>
+  </span>
+</div>

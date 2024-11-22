@@ -1,0 +1,16 @@
+@if (batteryHealth) {
+  <div class="battery-health">
+    @if (batteryHealth.loadingState === 'loading') {
+      <vh-skeleton-loading width="24px" height="24px"></vh-skeleton-loading>
+    } @else if (batteryHealth.loadingState === 'loaded' && batteryHealth.data) {
+      <mat-icon
+        fontIcon="bosch-ic-battery-car-charging"
+        [matTooltip]="batteryHealth.data.category || ''"
+        [style.color]="batteryHealth.data.sohStatus | batteryColor"
+      >
+      </mat-icon>
+    } @else {
+      <vh-not-available></vh-not-available>
+    }
+  </div>
+}

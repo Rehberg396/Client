@@ -1,0 +1,14 @@
+<div style="display: flex; align-items: center">
+  @if (checkForUpdateManually()) {
+    <mat-icon
+      fontIcon="bosch-ic-alert-warning-filled"
+      i18n-matTooltip
+      matTooltip="Need to update manually"
+      (click)="openUpdateDialog.emit()"
+      [style.color]="'#FFCF00'"
+    >
+    </mat-icon>
+  } @else {
+    {{ engineTypeProperties.engineType }}
+  }
+</div>

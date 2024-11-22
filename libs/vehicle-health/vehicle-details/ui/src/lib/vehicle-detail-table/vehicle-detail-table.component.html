@@ -1,0 +1,113 @@
+<table
+  class="vehicle-detail-table"
+  mat-table
+  [dataSource]="dataSource"
+  multiTemplateDataRows
+  aria-label="Vehicle Details"
+>
+  <ng-container matColumnDef="item">
+    <th scope="col" class="header-cell" mat-header-cell *matHeaderCellDef></th>
+    <td class="cell" mat-cell *matCellDef="let element">
+      <vh-item-detail [item]="element"></vh-item-detail>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="risk">
+    <th scope="col" class="header-cell risk" mat-header-cell *matHeaderCellDef>
+      <div class="text-normal" i18n>Risk</div>
+    </th>
+    <td class="cell" mat-cell *matCellDef="let element">
+      <vh-risk-cell [item]="element"></vh-risk-cell>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="criticality">
+    <th
+      scope="col"
+      class="header-cell no-validation risk"
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      <vh-criticality-select (selectionChange)="onFilterCriticality($event)" />
+    </th>
+    <td class="cell criticality" mat-cell *matCellDef="let element">
+      <vh-criticality-cell [item]="element" />
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expand">
+    <th
+      scope="col"
+      class="header-cell header-cell--expand action-cell"
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      &nbsp;
+    </th>
+    <td class="cell action-cell" mat-cell *matCellDef="let element">
+      <vh-expand-cell
+        [item]="element"
+        [expanded]="expandedElement() !== element.title"
+        (toggle)="$event.stopPropagation(); handleClick(element)"
+      />
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td
+      class="cell-detail"
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="displayedColumns.length"
+    >
+      <div
+        class="expand-detail"
+        [@detailExpand]="
+          element.title === expandedElement() ? 'expanded' : 'collapsed'
+        "
+      >
+        @if (element.title === expandedElement()) {
+          <vh-expanded-detail
+            [item]="element"
+            (loaded)="handleLoadedPowertrainHistory()"
+          />
+        }
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+  <tr
+    class="element-row"
+    mat-row
+    *matRowDef="let element; columns: displayedColumns"
+    (click)="handleClick(element)"
+  ></tr>
+
+  <tr
+    mat-row
+    *matRowDef="let element; columns: ['expandedDetail']"
+    class="detail-row"
+  ></tr>
+
+  <tr class="mat-row" *matNoDataRow [hidden]="dataSource.length === 0">
+    <td
+      class="mat-cell no-data-found border-0"
+      [attr.colspan]="displayedColumns.length"
+      i18n
+    >
+      No data found
+    </td>
+  </tr>
+
+  <tr mat-row *matRowDef="let row; columns: ['spacing']" class="spacing"></tr>
+  <ng-container matColumnDef="spacing">
+    <td
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="displayedColumns.length"
+      class="no-border"
+    ></td>
+  </ng-container>
+</table>

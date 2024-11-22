@@ -1,0 +1,111 @@
+<div class="sidenav" [class.sidenav--close]="!isOpen">
+  <div class="sidenav__header">
+    <h3 class="sidenav__title" i18n>Vehicle Health</h3>
+    <button
+      mat-icon-button
+      (click)="toggleMenu(!isOpen)"
+      class="sidenav__toggle"
+      aria-label="close"
+    >
+      <mat-icon
+        [fontIcon]="isOpen ? 'bosch-ic-close' : 'bosch-ic-list-view-mobile'"
+      ></mat-icon>
+    </button>
+  </div>
+
+  <div class="sidenav__content">
+    <mat-tree
+      [dataSource]="dataSource"
+      [treeControl]="treeControl"
+      class="sidenav__nav"
+    >
+      <mat-tree-node
+        class="sidenav__nav-tree-node"
+        *matTreeNodeDef="let node; let l = level"
+        matTreeNodeToggle
+        #treeNodeElement
+      >
+        <a
+          routerLinkActive="sidenav__nav-item--active"
+          [routerLinkActiveOptions]="node.routerLinkActiveOptions"
+          [routerLink]="node.link"
+          [queryParams]="node.defaultQueryParams"
+          [matTooltip]="!isOpen ? node.text : ''"
+          matTooltipPosition="right"
+          class="sidenav__nav-item"
+        >
+          <div
+            class="sidenav__nav-item-content"
+            [style.paddingLeft]="isOpen ? getPadding(treeNodeElement) : 0"
+          >
+            <mat-icon
+              [fontIcon]="node.icon"
+              class="sidenav__nav-item-icon"
+            ></mat-icon>
+            <span class="sidenav__nav-item-text">
+              {{ node.text }}
+            </span>
+          </div>
+        </a>
+      </mat-tree-node>
+
+      <mat-nested-tree-node
+        class="sidenav__nav-tree-node sidenav__nav-tree-node--nested"
+        *matTreeNodeDef="let node; when: hasChild"
+        matTreeNodeToggle
+        #nestedTreeNodeElement
+      >
+        <a
+          [matTooltip]="!isOpen ? node.text : ''"
+          matTooltipPosition="right"
+          [routerLink]="node.link"
+          [queryParams]="node.defaultQueryParams"
+          class="sidenav__nav-item sidenav__nav-item-parent"
+          [class.sidenav__nav-item--expanded]="treeControl.isExpanded(node)"
+          routerLinkActive="sidenav__nav-item--active"
+          [routerLinkActiveOptions]="node.routerLinkActiveOptions"
+        >
+          <div
+            class="sidenav__nav-item-content"
+            [style.paddingLeft]="isOpen ? getPadding(nestedTreeNodeElement) : 0"
+          >
+            <mat-icon
+              [fontIcon]="node.icon"
+              class="sidenav__nav-item-icon"
+            ></mat-icon>
+            <span class="sidenav__nav-item-text">{{ node.text }}</span>
+            <mat-icon
+              fontIcon="bosch-ic-down"
+              class="sidenav__nav-item-toggle"
+            ></mat-icon>
+          </div>
+        </a>
+        <div class="sidenav__nav-item-children" role="group">
+          <ng-container matTreeNodeOutlet></ng-container>
+        </div>
+      </mat-nested-tree-node>
+    </mat-tree>
+  </div>
+
+  <div class="sidenav__footer">
+    @for (node of secondaryNavItems; track node) {
+      <div class="sidenav__nav">
+        <a
+          [routerLink]="node.link"
+          [matTooltip]="!isOpen ? node.text : ''"
+          [queryParams]="node.defaultQueryParams"
+          matTooltipPosition="right"
+          class="sidenav__nav-item"
+          routerLinkActive="sidenav__nav-item--active"
+          [routerLinkActiveOptions]="node.routerLinkActiveOptions"
+        >
+          <div class="sidenav__nav-item-content">
+            <mat-icon [fontIcon]="node.icon" class="sidenav__nav-item-icon">
+            </mat-icon>
+            <span class="sidenav__nav-item-text"> {{ node.text }} </span>
+          </div>
+        </a>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="fleet-overview-detail">
+  <table
+    class="fleet-overview-detail__table"
+    aria-label="Fleet Overview Detail"
+  >
+    <tr class="name">
+      <th scope="col" i18n class="source">Source</th>
+      <th scope="col" i18n class="fault-code">Fault Code</th>
+      <th scope="col" i18n class="fault-text">Fault Text</th>
+      <th scope="col" i18n class="affected-system">Affected System</th>
+      <th scope="col" i18n class="age-of-issue">Age of issue</th>
+    </tr>
+    <tr class="value">
+      <td>{{ data?.source }}</td>
+      <td>{{ data?.dtcCode }}</td>
+      <td>{{ data?.description }}</td>
+      <td>{{ data?.category }}</td>
+      <td>{{ data?.startTime | distanceToNow: locale }}</td>
+    </tr>
+    <tr class="divider">
+      <td colspan="5"></td>
+    </tr>
+    <tr class="name">
+      <th scope="col" colspan="2" i18n>Possible Symptoms</th>
+      <th scope="col" colspan="2" i18n>Recommendations</th>
+      <th scope="col" colspan="1" i18n>Last Update</th>
+    </tr>
+    <tr class="value">
+      <td colspan="2">
+        {{ data?.symptom }}
+      </td>
+      <td colspan="2">
+        @if (data?.recommendations; as recommendations) {
+          @for (recommendation of recommendations; track recommendation) {
+            <p>{{ recommendation }}</p>
+          }
+        }
+      </td>
+      <td colspan="1">
+        {{ data?.lastUpdatedFault | distanceToNow: locale }}
+      </td>
+    </tr>
+  </table>
+</div>

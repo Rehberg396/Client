@@ -1,0 +1,75 @@
+:host::ng-deep {
+  display: block;
+  overflow-x: auto;
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+.vehicle-detail-table {
+  border-collapse: collapse;
+
+  tr[mat-header-row] {
+    position: unset;
+    height: 64px !important;
+  }
+
+  th[mat-header-cell] {
+    border: none;
+  }
+
+  tr[mat-header-row] td[mat-cell],
+  tr[mat-row] td[mat-cell] {
+    border-left: none;
+    border-right: none;
+    border-color: #eef0f1;
+  }
+
+  tr.element-row {
+    background-color: #eff1f2;
+  }
+
+  tr.detail-row {
+    height: 0 !important;
+    background-color: #f9f9fa;
+
+    td {
+      padding: 0;
+      background-color: #f9f9fa;
+    }
+  }
+
+  .action-cell {
+    width: 0;
+  }
+
+  .search-filter {
+    display: flex;
+    align-items: center;
+  }
+
+  .spacing {
+    height: 0 !important;
+    td {
+      border-top: 0.5rem solid white !important;
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 0;
+    }
+  }
+}
+
+th {
+  &.risk {
+    width: 20%;
+  }
+
+  &.criticality {
+    width: 10%;
+  }
+
+  &.expand {
+    width: 80px;
+  }
+}

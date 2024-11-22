@@ -1,0 +1,46 @@
+<div class="form-layout-container">
+  <div class="form-layout__header">
+    <div class="form-layout-label" i18n>Update Engine Type</div>
+    <div class="form-layout-close">
+      <mat-icon fontIcon="bosch-ic-close" (click)="onClose()"></mat-icon>
+    </div>
+  </div>
+
+  <div class="form-layout__content">
+    <form [formGroup]="engineTypeForm" (ngSubmit)="submit()">
+      <div class="form-layout__item-wrapper">
+        <div class="form-layout__item">
+          <vh-select
+            i18n-label
+            label="Engine Type"
+            cssClass="w-100"
+            formControlName="engineType"
+            [options]="(engineTypes$ | async)!"
+          ></vh-select>
+        </div>
+      </div>
+      <div class="form__action-wrapper">
+        <vh-button
+          tabindex="-1"
+          class="add-btn loading-spinner"
+          [disabled]="isLoading()"
+        >
+          @if (isLoading()) {
+            <mat-spinner class="mr-1" [diameter]="24"></mat-spinner>
+          }
+          {{ updateButtonLabel }}
+        </vh-button>
+        <vh-button
+          buttonType="button"
+          tabindex="-1"
+          type="secondary"
+          (click)="onClose()"
+          [class]="'button-cancel'"
+          [disabled]="isLoading()"
+        >
+          {{ cancelLabel }}
+        </vh-button>
+      </div>
+    </form>
+  </div>
+</div>

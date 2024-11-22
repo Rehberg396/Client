@@ -1,0 +1,50 @@
+<div class="deletion-report__wrapper">
+  <div class="deletion-report__header">
+    <div class="deletion-report__title">Deletion Report</div>
+    <div class="deletion-report__close">
+      <mat-icon fontIcon="bosch-ic-close" (click)="onClose()"> </mat-icon>
+    </div>
+  </div>
+  <hr class="deletion-report__divider" />
+  <div class="deletion-report__content">
+    <div class="item">
+      <h5 i18n>Successfully Deleted Vehicles:</h5>
+      @for (value of successes; track value.vin) {
+        <div class="success">{{ value.vin }}</div>
+      } @empty {
+        <div class="success" i18n>No vehicles were deleted.</div>
+      }
+    </div>
+    <div class="item">
+      <h5 i18n>Deletion Errors:</h5>
+      @if (errors.length) {
+        <table class="error-table" aria-label="Deletion report error table">
+          <tr>
+            <th i18n class="vin">VIN</th>
+            <th i18n>Reason</th>
+          </tr>
+          @for (value of errors; track value.vin) {
+            <tr>
+              <td>
+                <span class="error">{{ value.vin }}</span>
+              </td>
+              <td>{{ value.reason }}</td>
+            </tr>
+          }
+        </table>
+      } @else {
+        <div class="success" i18n>No errors occurred.</div>
+      }
+    </div>
+  </div>
+  <div class="deletion-report__actions">
+    <vh-button tabindex="-1" (click)="download()" type="primary">
+      <mat-icon fontIcon="bosch-ic-download"></mat-icon>
+      <span i18n>Download</span>
+    </vh-button>
+    <vh-button tabindex="-1" (click)="onClose()" type="secondary">
+      <mat-icon fontIcon="bosch-ic-close"></mat-icon>
+      <span i18n>Close</span>
+    </vh-button>
+  </div>
+</div>

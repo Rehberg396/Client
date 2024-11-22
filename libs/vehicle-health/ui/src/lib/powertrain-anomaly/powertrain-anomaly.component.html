@@ -1,0 +1,15 @@
+@if (anomalies) {
+  <div class="powertrain-anomaly">
+    @if (anomalies.loadingState === 'loading') {
+      <vh-skeleton-loading width="24px" height="24px"></vh-skeleton-loading>
+    } @else if (anomalies.loadingState === 'loaded' && anomalies.data) {
+      <vh-powertrain-anomaly-icon
+        [coolantStatus]="anomalies.data.coolantStatus"
+        [oilStatus]="anomalies.data.oilStatus"
+      >
+      </vh-powertrain-anomaly-icon>
+    } @else {
+      <vh-not-available></vh-not-available>
+    }
+  </div>
+}

@@ -1,0 +1,36 @@
+<div
+  class="config-column__wrapper"
+  (click)="isActive = !isActive"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+>
+  <mat-icon fontIcon="bosch-ic-settings"> </mat-icon>
+  <span i18n>Settings</span>
+</div>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isActive"
+  (overlayOutsideClick)="isActive = false"
+>
+  <div class="config-column__content-wrapper">
+    <div class="config-column__title" i18n>Show/hide columns</div>
+    <mat-divider></mat-divider>
+    <div class="config-column__content">
+      @for (config of configs(); track config.key) {
+        <div>
+          <mat-checkbox
+            class="item"
+            color="primary"
+            [(ngModel)]="config.isChecked"
+          >
+            {{ config.title }}
+          </mat-checkbox>
+        </div>
+      }
+    </div>
+    <div class="config-column__functions">
+      <vh-button tabindex="-1" (click)="onApply()" i18n> Apply </vh-button>
+    </div>
+  </div>
+</ng-template>

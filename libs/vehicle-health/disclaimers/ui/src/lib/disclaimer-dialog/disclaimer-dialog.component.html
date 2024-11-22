@@ -1,0 +1,13 @@
+<div class="disclaimer-dialog">
+  <div class="disclaimer-dialog-header" i18n>Disclaimer</div>
+  <vh-disclaimer-content></vh-disclaimer-content>
+  <div class="disclaimer-dialog-actions">
+    <mat-checkbox color="primary" [formControl]="formControl" i18n>
+      Don't show the message again.
+    </mat-checkbox>
+    <vh-button (click)="accept()">
+      <mat-icon fontIcon="bosch-ic-checkmark"></mat-icon>
+      <span i18n> Accept </span>
+    </vh-button>
+  </div>
+</div>

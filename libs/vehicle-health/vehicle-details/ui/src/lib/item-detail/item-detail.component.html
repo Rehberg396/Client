@@ -1,0 +1,38 @@
+@if (item) {
+  <div class="item">
+    <div class="image">
+      @if (item.status === 'loading') {
+        <vh-skeleton-loading width="3rem" height="3rem" />
+      } @else if (item.status === 'loaded') {
+        <mat-icon class="icon" [fontIcon]="item.icon"> </mat-icon>
+      }
+    </div>
+    <div>
+      <div class="name">
+        @if (item.status === 'loading') {
+          <vh-skeleton-loading width="20rem" height="1.5rem" />
+        } @else if (item.status === 'loaded') {
+          {{ item.title }}
+        }
+        @if (item.isUpdating) {
+          <mat-spinner
+            class="spinner"
+            diameter="16"
+            mode="indeterminate"
+          ></mat-spinner>
+        }
+      </div>
+
+      @if (item.status === 'loading') {
+        <div class="spacing"></div>
+        <vh-skeleton-loading width="20rem" height="1rem" />
+      } @else if (item.status === 'loaded') {
+        @for (description of item.descriptions; track description) {
+          <div class="description">
+            {{ description }}
+          </div>
+        }
+      }
+    </div>
+  </div>
+}

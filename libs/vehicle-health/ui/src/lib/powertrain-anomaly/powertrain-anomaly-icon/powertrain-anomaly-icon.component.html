@@ -1,0 +1,21 @@
+<div
+  class="powertrain-anomaly-item"
+  [class.powertrain-anomaly-item--vertical]="type === 'vertical'"
+  [class.powertrain-anomaly-item--horizontal]="type === 'horizontal'"
+>
+  <mat-icon
+    class="powertrain-anomaly-item"
+    fontIcon="bosch-ic-revolution-rpm"
+    [matTooltip]="'COOLANT' | powertrainAnomalyStatus: coolantStatus"
+    [style.color]="coolantStatus | powertrainAnomalyColor"
+  >
+  </mat-icon>
+
+  <mat-icon
+    class="powertrain-anomaly-item"
+    fontIcon="bosch-ic-oil-lamp"
+    [matTooltip]="'OIL' | powertrainAnomalyStatus: oilStatus"
+    [style.color]="oilStatus | powertrainAnomalyColor"
+  >
+  </mat-icon>
+</div>

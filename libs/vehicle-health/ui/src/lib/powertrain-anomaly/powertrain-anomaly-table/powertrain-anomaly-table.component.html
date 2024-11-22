@@ -1,0 +1,52 @@
+@if (vm(); as data) {
+  @if (data.status === 'loading') {
+    <vh-skeleton-loading height="300px"></vh-skeleton-loading>
+  }
+
+  @if (data.status === 'loaded') {
+    <table aria-label="Powertrain Anomaly Table" class="anomaly-table">
+      <tr>
+        <th i18n>Powertrain Anomaly Feature</th>
+        <th i18n>Anomaly History</th>
+        <th i18n>Timestamp</th>
+      </tr>
+
+      <ng-container
+        *ngTemplateOutlet="
+          anomalyTemplate;
+          context: { records: data.coolants, icon: 'bosch-ic-revolution-rpm' }
+        "
+      ></ng-container>
+
+      <ng-container
+        *ngTemplateOutlet="
+          anomalyTemplate;
+          context: { records: data.oils, icon: 'bosch-ic-oil-lamp' }
+        "
+      ></ng-container>
+    </table>
+
+    <ng-template #anomalyTemplate let-records="records" let-icon="icon">
+      @for (record of records; track record; let idx = $index) {
+        <tr>
+          @if (idx === 0) {
+            <td [attr.rowspan]="records.length">
+              <b>{{ record.anomalyType | powertrainAnomalyType }}</b>
+            </td>
+          }
+          <td>
+            <vh-icon-label
+              [color]="record.status | powertrainAnomalyColor"
+              [icon]="icon"
+              [label]="
+                record.anomalyType | powertrainAnomalyStatus: record.status
+              "
+            >
+            </vh-icon-label>
+          </td>
+          <td>{{ record.timestamp | date: 'medium' }}</td>
+        </tr>
+      }
+    </ng-template>
+  }
+}

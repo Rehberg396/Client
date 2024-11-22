@@ -1,0 +1,20 @@
+<div class="vehicle-faults">
+  @if (vm$ | async; as vm) {
+    <vh-vehicle-faults
+      [vin]="vin()"
+      [page]="page()"
+      [size]="size()"
+      [sortBy]="sortBy()"
+      [sortDirection]="sortDirection()"
+      [displayedColumns]="displayedColumns()"
+      [dataSource]="vm.dataSource"
+      [isLoading]="vm.isLoading"
+      [totalElements]="vm.totalElements"
+      (pageChange)="onPageChange($event)"
+      (sortChange)="onSortChange($event)"
+      (displayedColumnsChange)="onDisplayedColumnsChange($event)"
+      (dismiss)="openDialogDismiss($event)"
+      (history)="openHistoryDialog($event)"
+    ></vh-vehicle-faults>
+  }
+</div>

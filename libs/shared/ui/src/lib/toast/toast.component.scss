@@ -1,0 +1,50 @@
+$success-bg: #86d7a2;
+$error-bg: #ffb2b2;
+
+.custom-toast {
+  &-container {
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem 0 0;
+    justify-content: space-between;
+    position: relative;
+    font-size: 0.875rem;
+    min-width: 25rem;
+    min-height: 4rem;
+
+    box-shadow: rgba(0, 0, 0, 0.35) 0 0.3175rem 0.9375rem;
+
+    &.success {
+      background: $success-bg;
+    }
+
+    &.error {
+      background: $error-bg;
+    }
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+
+    &__icon {
+      display: flex;
+      border-radius: 50%;
+      margin-right: 0.625rem;
+      margin-left: 0.625rem;
+
+      img {
+        margin: 0.625rem;
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+    }
+  }
+
+  &__close {
+    margin-left: 1.25rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.5s;
+  }
+}

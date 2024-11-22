@@ -1,0 +1,50 @@
+@if (vm$ | async; as vm) {
+  <div class="dtc-template no-validation">
+    <div class="dtc-template__header">
+      <vh-search-input
+        i18n-label
+        label="Search for DTC"
+        [value]="search()"
+        (search)="onSearch($event)"
+      />
+
+      <div class="ml-3">
+        <vh-filter
+          [filterOption]="vm.tableFilterOption"
+          (filterOptionChange)="onFilterChange($event)"
+        >
+        </vh-filter>
+      </div>
+
+      <div class="ml-3">
+        <vh-column-config
+          [configs]="tableColumnConfigs()"
+          (configChange)="onTableColumnConfigsChange($event)"
+        />
+      </div>
+
+      <div class="ml-auto">
+        <vh-button type="primary" (click)="onCreate()">
+          <mat-icon fontIcon="bosch-ic-add"></mat-icon>
+          <span i18n>Create</span>
+        </vh-button>
+      </div>
+    </div>
+
+    <div class="dtc-template__table">
+      <vh-table
+        [dataSource]="vm.dataSource"
+        [isLoading]="vm.isLoading"
+        [errorMessage]="vm.errorMessage"
+        [columnConfigs]="columnConfigs()"
+      />
+    </div>
+
+    <mat-paginator
+      [length]="vm.totalElements"
+      [pageIndex]="page()"
+      [pageSize]="size()"
+      (page)="onPage($event)"
+    />
+  </div>
+}

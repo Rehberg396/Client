@@ -1,0 +1,40 @@
+@if (authState(); as authState) {
+  @if (authState.isAuthenticated) {
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="userMenu"
+      i18n-matTooltip
+      matTooltip="User Info"
+    >
+      <mat-icon fontIcon="bosch-ic-user" />
+    </button>
+    <mat-menu #userMenu="matMenu" class="user-menu">
+      <div class="user-info" (click)="$event.stopPropagation()">
+        <div class="user-info__item user-info__item--name">
+          <mat-icon fontIcon="bosch-ic-user" />
+          <span> {{ authState.userInfo.name }} </span>
+        </div>
+        <div class="user-info__item user-info__item--mail">
+          <mat-icon fontIcon="bosch-ic-mail" />
+          <span> {{ authState.userInfo.email }} </span>
+        </div>
+        <div class="user-info__item user-info__item--customer">
+          <mat-icon fontIcon="bosch-ic-address-consumer-data" />
+          <span> {{ authState.userInfo.customer }} </span>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      @if (isEnabledCheckForUpdate()) {
+        <button mat-menu-item (click)="checkForUpdate.emit()">
+          <mat-icon fontIcon="bosch-ic-refresh" />
+          <ng-container i18n>Check For Update</ng-container>
+        </button>
+        <mat-divider></mat-divider>
+      }
+      <button id="logout-btn" mat-menu-item (click)="logout.emit()">
+        <mat-icon fontIcon="bosch-ic-logout" />
+        <ng-container i18n>Logout</ng-container>
+      </button>
+    </mat-menu>
+  }
+}

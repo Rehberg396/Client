@@ -1,0 +1,36 @@
+@if (vm$ | async; as vm) {
+  <div class="fleet-overview">
+    <div class="fleet-overview__toolbar">
+      <div>
+        <vh-search-input
+          i18n-label
+          label="Search"
+          i18n-placeholder
+          placeholder="Enter VIN, License Plate, Vehicle Name, Manufacturer Name or Model Line"
+          i18n-matTooltip
+          matTooltip="You can search by VIN, License Plate, Vehicle Name, Manufacturer Name or Model Line"
+          [value]="search()"
+          (search)="onSearch($event)"
+        />
+      </div>
+    </div>
+
+    <div class="fleet-overview__table">
+      <vh-fleet-overview-table
+        [dataSource]="vm.dataSource"
+        [isLoading]="vm.isLoading"
+        [pdUsecase]="vm.pdUsecase"
+        (loadBatteryHealth)="onLoadBatteryHealth($event)"
+        (loadAnomalies)="onLoadAnomalies($event)"
+        (sort)="onSortChange($event)"
+      ></vh-fleet-overview-table>
+    </div>
+
+    <mat-paginator
+      [length]="vm.totalElements"
+      [pageIndex]="page()"
+      [pageSize]="size()"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+  </div>
+}

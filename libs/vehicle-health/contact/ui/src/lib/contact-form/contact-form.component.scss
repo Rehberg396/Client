@@ -1,0 +1,23 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  
+    .contact-form-container {
+      height: 100%;
+      background-color: #f2f7fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  
+      .contact-form {
+        height: 100%;
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid #f4f4f4;
+        border-radius: 4px;
+        padding: 20px;
+      }
+    }
+  }
+  

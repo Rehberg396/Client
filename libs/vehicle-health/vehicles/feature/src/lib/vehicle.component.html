@@ -1,0 +1,113 @@
+@if (vm$ | async; as vm) {
+  <as-split [useTransition]="true" (dragEnd)="onDragEnd($event)">
+    <as-split-area class="vehicle">
+      <div class="vehicle__toolbar">
+        <vh-search-input
+          i18n-label
+          label="Search"
+          i18n-placeholder
+          placeholder="Enter VIN, License Plate, Vehicle Name, Manufacturer Name"
+          i18n-matTooltip
+          matTooltip="You can search by VIN, License Plate, Vehicle Name, Manufacturer Name"
+          [value]="search()"
+          (search)="onSearch($event)"
+        />
+
+        <div class="ml-3">
+          <vh-column-config
+            [configs]="tableColumnConfigs()"
+            (configChange)="onTableColumnConfigsChange($event)"
+          />
+        </div>
+        <div class="ml-3">
+          <mat-checkbox
+            color="primary"
+            [checked]="needManualUpdatedEngineType()"
+            (change)="changeManualEngineTypeUpdate($event.checked)"
+            i18n
+          >
+            Manual Update Engine Type
+          </mat-checkbox>
+        </div>
+
+        <div class="ml-auto">
+          <div class="vehicle__actions">
+            @if (selection.selected.length > 1) {
+              <vh-button type="danger" (click)="deleteMany()">
+                <mat-icon fontIcon="bosch-ic-delete"></mat-icon>
+                <span i18n>
+                  Delete {{ selection.selected.length }} selected rows
+                </span>
+              </vh-button>
+            }
+            <vh-button type="primary" (click)="onAdd()">
+              <mat-icon fontIcon="bosch-ic-add"></mat-icon>
+              <span i18n>Create</span>
+            </vh-button>
+          </div>
+        </div>
+      </div>
+      <div class="vehicle__table">
+        <vh-table
+          [dataSource]="vm.dataSource"
+          [isLoading]="vm.isLoading"
+          [errorMessage]="vm.errorMessage"
+          [showSelectedRow]="true"
+          [selectedData]="vm.selectedVehicle"
+          [showHighlight]="isEngineTypeManuallyUpdate"
+          [selection]="selection"
+          [columnConfigs]="columnConfigs()"
+        />
+      </div>
+      <mat-paginator
+        [length]="vm.totalElements"
+        [pageIndex]="page()"
+        [pageSize]="size()"
+        (page)="onPage($event)"
+      />
+    </as-split-area>
+    <as-split-area [visible]="!!vm.selectedVehicle" [size]="sizes()[1]">
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+        <mat-tab i18n-label label="Vehicle Fault">
+          <ng-template matTabContent>
+            @if (vm.selectedVehicle; as vehicle) {
+              @if (vehicleFault$ | async; as vehicleFault) {
+                <vh-vehicle-faults
+                  [vin]="vehicle.vin"
+                  [page]="vfPage()"
+                  [size]="vfSize()"
+                  [sortBy]="vfSortBy()"
+                  [sortDirection]="vfSortDirection()"
+                  [displayedColumns]="vfDisplayedColumns()"
+                  [dataSource]="vehicleFault.dataSource"
+                  [isLoading]="vehicleFault.isLoading"
+                  [totalElements]="vehicleFault.totalElements"
+                  (pageChange)="onVfPageChange($event)"
+                  (sortChange)="onVfSortChange($event)"
+                  (displayedColumnsChange)="onVfDisplayedColumnsChange($event)"
+                  (dismiss)="openDialogDismiss($event)"
+                  (history)="openHistoryDialog($event)"
+                ></vh-vehicle-faults>
+              }
+            }
+          </ng-template>
+        </mat-tab>
+        <mat-tab i18n-label label="Vehicle Properties">
+          <ng-template matTabContent>
+            @if (vm.selectedVehicle; as vehicle) {
+              <vh-vehicle-properties [selectedVehicle]="vehicle" />
+            }
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </as-split-area>
+  </as-split>
+}
+
+<ng-template #engineType let-data="row">
+  <vh-engine-type
+    [engineTypeProperties]="data"
+    (openUpdateDialog)="onUpdateEngineType(data)"
+    (click)="$event.stopPropagation()"
+  ></vh-engine-type>
+</ng-template>

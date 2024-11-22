@@ -1,0 +1,260 @@
+<div class="vehicle-detail-info">
+  <div class="vehicle-detail-info__header">
+    <h3 class="vehicle-detail-info__primary">
+      @if (vehicle.loadingState === 'loading') {
+        <vh-skeleton-loading height="2rem" />
+      } @else if (vehicle.loadingState === 'loaded') {
+        {{ vehicle.data.name }}
+      } @else {
+        <vh-not-available></vh-not-available>
+      }
+    </h3>
+  </div>
+
+  <div class="vehicle-detail-info__content">
+    <vh-divider title="Details"></vh-divider>
+    <div class="vehicle-detail-info__group">
+      <vh-vehicle-item
+        [isLoading]="vehicle.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>VIN</div>
+        <div important>
+          @if (vehicle.loadingState === 'loaded' && vehicle.data.vin) {
+            {{ vehicle.data.vin }}
+          } @else {
+            <vh-not-available />
+          }
+        </div>
+      </vh-vehicle-item>
+
+      <vh-vehicle-item
+        [isLoading]="fleetOverview.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Last Milage</div>
+        <div important>
+          @if (
+            fleetOverview.loadingState === 'loaded' &&
+            fleetOverview.data.odometer
+          ) {
+            {{ fleetOverview.data.odometer | odometerToKm }}
+          } @else {
+            <vh-not-available />
+          }
+        </div>
+      </vh-vehicle-item>
+
+      <vh-vehicle-item
+        [isLoading]="vehicle.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>License Plate</div>
+        <div important>
+          @if (vehicle.loadingState === 'loaded' && vehicle.data.licensePlate) {
+            {{ vehicle.data.licensePlate }}
+          } @else {
+            <vh-not-available />
+          }
+        </div>
+      </vh-vehicle-item>
+    </div>
+
+    <div class="vehicle-detail-info__group">
+      <vh-vehicle-item
+        [isLoading]="vehicle.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Manufacturer Name</div>
+        <div important>
+          @if (
+            vehicle.loadingState === 'loaded' && vehicle.data.manufacturerName
+          ) {
+            {{ vehicle.data.manufacturerName }}
+          } @else {
+            <vh-not-available />
+          }
+        </div>
+      </vh-vehicle-item>
+
+      <vh-vehicle-item
+        [isLoading]="vehicle.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Model</div>
+        <div important>
+          @if (vehicle.loadingState === 'loaded' && vehicle.data.modelType) {
+            {{ vehicle.data.modelType }}
+          } @else {
+            <vh-not-available />
+          }
+        </div>
+      </vh-vehicle-item>
+
+      <vh-vehicle-item
+        [isLoading]="vehicle.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Model Year</div>
+        <div important>
+          @if (vehicle.loadingState === 'loaded' && vehicle.data.modelYear) {
+            {{ vehicle.data.modelYear }}
+          } @else {
+            <vh-not-available />
+          }
+        </div>
+      </vh-vehicle-item>
+
+      <vh-vehicle-item
+        [isLoading]="vehicle.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Engine Type</div>
+        <div important>
+          @if (vehicle.loadingState === 'loaded' && vehicle.data.engineType) {
+            {{ vehicle.data.engineType }}
+          } @else {
+            <vh-not-available />
+          }
+        </div>
+      </vh-vehicle-item>
+    </div>
+
+    <vh-divider title="Condition"></vh-divider>
+    <div class="vehicle-detail-info__group">
+      <vh-vehicle-item
+        [isLoading]="fleetOverview.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Last Updated</div>
+        <div important>
+          @if (
+            fleetOverview.loadingState === 'loaded' &&
+            fleetOverview.data.lastUpdated
+          ) {
+            {{ fleetOverview.data.lastUpdated | date: 'shortDate' }}
+          } @else {
+            <vh-not-available />
+          }
+        </div>
+      </vh-vehicle-item>
+
+      <vh-vehicle-item
+        [isLoading]="fleetOverview.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Total Faults</div>
+        <div important>
+          @if (
+            fleetOverview.loadingState === 'loaded' &&
+            fleetOverview.data.totalFaults
+          ) {
+            {{ fleetOverview.data.totalFaults }}
+          } @else {
+            0
+          }
+        </div>
+      </vh-vehicle-item>
+
+      <vh-vehicle-item
+        [isLoading]="fleetOverview.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Criticality</div>
+        <div important>
+          @if (fleetOverview.loadingState === 'loaded') {
+            <vh-criticality
+              [value]="fleetOverview.data.criticality"
+            ></vh-criticality>
+          } @else {
+            <vh-not-available />
+          }
+        </div>
+      </vh-vehicle-item>
+    </div>
+
+    <div class="vehicle-detail-info__group">
+      <vh-vehicle-item
+        [isLoading]="fleetOverview.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Risks</div>
+        <div important>
+          @if (fleetOverview.loadingState === 'loaded') {
+            <vh-risks [risks]="fleetOverview.data"></vh-risks>
+          } @else {
+            <vh-not-available />
+          }
+        </div>
+      </vh-vehicle-item>
+
+      <vh-vehicle-item
+        [isLoading]="fleetOverview.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Detection</div>
+        <div important>
+          @if (fleetOverview.loadingState === 'loaded') {
+            <vh-risks [risks]="fleetOverview.data"></vh-risks>
+          } @else {
+            <vh-not-available />
+          }
+        </div>
+      </vh-vehicle-item>
+
+      <vh-vehicle-item
+        [isLoading]="powertrainAnomaly.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Powertrain Anomaly</div>
+        <div important>
+          <vh-powertrain-anomaly [anomalies]="powertrainAnomaly">
+          </vh-powertrain-anomaly>
+        </div>
+      </vh-vehicle-item>
+    </div>
+
+    <div class="vehicle-detail-info__group">
+      <vh-vehicle-item
+        [isLoading]="fleetOverview.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Fault History</div>
+        <div important>
+          <a
+            [routerLink]="['.', 'faults']"
+            [queryParams]="{ page: 0, size: 10 }"
+            class="flex-center"
+          >
+            <mat-icon fontIcon="bosch-ic-history"></mat-icon>
+            <span i18n>Details</span>
+          </a>
+        </div>
+      </vh-vehicle-item>
+
+      <div class="vehicle-detail-info__group">
+        <vh-vehicle-item
+          [isLoading]="vehicle.loadingState === 'loading'"
+          [isImportant]="true"
+        >
+          <div name i18n>Diagnostic</div>
+          <div important>
+            <a
+              [routerLink]="['/diagnostic']"
+              [queryParams]="{
+                vin:
+                  vehicle.loadingState === 'loaded' && vehicle.data.vin
+                    ? vehicle.data.vin
+                    : null,
+              }"
+              class="flex-center"
+            >
+              <mat-icon fontIcon="bosch-ic-vehicle-diagnostic-check"></mat-icon>
+              <span i18n>Link</span>
+            </a>
+          </div>
+        </vh-vehicle-item>
+      </div>
+    </div>
+  </div>
+</div>

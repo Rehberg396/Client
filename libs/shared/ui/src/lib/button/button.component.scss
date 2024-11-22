@@ -1,0 +1,126 @@
+@import 'legacy/variables';
+
+:host {
+  display: inline-block;
+}
+
+.button-wrapper {
+  outline: none;
+  height: 40px;
+  padding: 0 1rem;
+  color: $bosch-white;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:0.5rem;
+  cursor: pointer;
+
+  &.small {
+    height: 2rem;
+    padding: 0 0.625rem;
+    font-size: 0.75rem;
+  }
+
+  &.big {
+    height: 48px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+
+  &.primary {
+    &:not(:disabled) {
+      background: $color-primary;
+      border: 1px solid $color-primary;
+
+      &:hover {
+        background: $color-primary-hover !important;
+        border: 1px solid $color-primary-hover !important;
+      }
+    }
+
+    &:disabled {
+      border: none;
+      background: $color-primary-disabled;
+      color: $color-primary-disabled-text;
+      cursor: pointer;
+    }
+  }
+
+  &.secondary {
+    &:not(:disabled) {
+      background: $bosch-white;
+      color: $color-primary;
+      border: 1px solid $color-primary;
+
+      &:hover {
+        background: $color-secondary-hover !important;
+        border: 1px solid $color-primary-hover !important;
+        color: $color-primary-hover !important;
+      }
+    }
+
+    &:disabled {
+      border: 1px solid $color-primary-disabled;
+      background: $bosch-white;
+      color: $color-primary-disabled;
+      cursor: pointer;
+    }
+  }
+
+  &.danger {
+    &:not(:disabled) {
+      background: $bosch-white;
+      color: $color-danger;
+      border: 1px solid $color-danger;
+
+      &:hover {
+        background: $color-danger-hover !important;
+      }
+    }
+
+    &:disabled {
+      border: 1px solid $color-danger;
+      color: $color-danger;
+      cursor: pointer;
+    }
+  }
+
+  .icon {
+    margin-right: 0.25rem;
+  }
+
+  &.no-border {
+    border: none !important;
+    background-color: unset !important;
+    padding: 0;
+
+    &:hover {
+      border: none !important;
+      background-color: unset !important;
+    }
+
+    &.secondary,
+    &.danger,
+    &.primary {
+      &:not(:disabled) {
+        &:hover {
+          border: none !important;
+          background-color: unset !important;
+        }
+      }
+    }
+
+    &.secondary {
+      color: $color-primary;
+    }
+
+    &.danger {
+      color: $color-danger;
+    }
+
+    &.primary {
+      color: $color-primary;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+<div class="footer">
+  <div class="footer__copyright">
+    &copy;{{ year }} Robert Bosch GmbH, all rights reserved
+  </div>
+  <div class="footer__links">
+    @if (!isDevMode) {
+      <select [value]="locale" (change)="onChangeLocale($event)">
+        <option lang="de" value="de">Deutsch (de)</option>
+        <option lang="en-US" value="en-US">English (en-US)</option>
+        <option lang="it" value="it">Italiano (it)</option>
+        <option lang="nl" value="nl">Nederlands (nl)</option>
+        <option lang="pl" value="pl">Polski (pl)</option>
+        <option lang="ro" value="ro">Română (ro)</option>
+      </select>
+    }
+    <a href="javascript:void(0)" i18n>Imprint</a>
+    <a href="javascript:void(0)" i18n>Legal information</a>
+    <a href="javascript:void(0)" i18n>Data privacy</a>
+    <a href="javascript:void(0)" i18n>Disclosure documents</a>
+  </div>
+</div>

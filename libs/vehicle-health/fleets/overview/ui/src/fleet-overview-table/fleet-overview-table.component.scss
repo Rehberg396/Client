@@ -1,0 +1,74 @@
+$primary-row-color: #eff1f2;
+
+.fleet-overview-table {
+  tr {
+    &.element-row {
+      background-color: $primary-row-color;
+      height: 4.0625rem !important;
+    }
+
+    &.detail-row {
+      height: 0 !important;
+      background-color: #f9f9fa;
+
+      td {
+        padding: 0;
+      }
+    }
+  }
+
+  th.header-cell,
+  td.cell {
+    border: none;
+  }
+
+  th.header-cell {
+    &--expand {
+      width: 1%;
+    }
+  }
+
+  td.action {
+    padding: 0;
+  }
+
+  .element-detail {
+    overflow: hidden;
+  }
+
+  .last-updated {
+    white-space: nowrap;
+  }
+
+  .criticality {
+    padding: 5px;
+    background-color: #12cb4b;
+    color: white;
+  }
+
+  .image {
+    height: 3rem;
+  }
+
+  .mat-column-image {
+    min-width: 66px;
+  }
+
+  .spacing {
+    height: 0 !important;
+    td {
+      border-top: 0.5rem solid white !important;
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 0;
+    }
+  }
+
+  .w-1 {
+    width: 1%;
+  }
+
+  .no-wrap {
+    white-space: nowrap;
+  }
+}

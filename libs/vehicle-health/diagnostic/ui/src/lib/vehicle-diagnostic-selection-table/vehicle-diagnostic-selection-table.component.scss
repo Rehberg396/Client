@@ -1,0 +1,54 @@
+@use '../../../../../../../apps/vehicle-health/src/scss/abstracts/variables' as var;
+
+.vehicle-diagnostic-selection-table {
+  border-collapse: collapse;
+
+  tr[mat-header-row] {
+    position: unset;
+  }
+
+  th[mat-header-cell] {
+    border: none;
+  }
+
+  tr[mat-header-row] td[mat-cell],
+  tr[mat-row] td[mat-cell] {
+    border-left: none;
+    border-right: none;
+  }
+
+  tr.element-row {
+    background-color: var.$bosch-grey-95;
+    flex: 1;
+    word-break: break-word;
+  }
+
+  tr.element-row.selected {
+    background-color: var.$bosch-green-95;
+  }
+
+  .spacing {
+    height: 0 !important;
+    td {
+      border-top: 0.2rem solid var.$bosch-white !important;
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 0;
+    }
+  }
+
+  .vin-cell {
+    width: 0;
+    white-space: nowrap;
+  }
+
+  .image-cell {
+    width: 0;
+  }
+  .image {
+    width: auto;
+    height: 3rem;
+  }
+
+}
+

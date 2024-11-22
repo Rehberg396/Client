@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  height: 100%;
+  min-width: 50vw;
+  width: 30rem;
+
+  .processing-stage {
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    &__body {
+      flex: 1;
+      overflow-y: auto;
+
+      .spinner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
+      .date-time-viewport {
+        height: 10rem;
+      }
+
+      .time-list {
+        padding-left: 20px;
+
+        li {
+          height: 32px;
+        }
+      }
+    }
+
+    &__actions {
+      display: flex;
+      text-align: right;
+      justify-content: flex-end;
+    }
+  }
+}

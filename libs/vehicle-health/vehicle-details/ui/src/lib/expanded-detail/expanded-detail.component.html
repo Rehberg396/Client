@@ -1,0 +1,21 @@
+@if (item) {
+  @if (item.status === 'loading') {
+    <vh-skeleton-loading />
+  } @else if (item.status === 'loaded') {
+    @if (item.type === 'dtcTemplate') {
+      @if (item.data.dtcTemplates; as dtcTemplates) {
+        @for (dtcTemplate of dtcTemplates; track dtcTemplate) {
+          <vh-recommendation [dtcTemplate]="dtcTemplate" />
+        }
+      } @else {
+        <vh-not-available />
+      }
+    } @else if (item.type === 'powertrain-anomaly') {
+      @if (item.data; as powertrainAnomaly) {
+        <vh-powertrain-anomaly-table [data]="powertrainAnomaly.history" (loaded)="loaded.emit()" />
+      } @else {
+        <vh-not-available />
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+@if (vm$ | async; as vm) {
+  <div class="vehicle-diagnostic">
+    <div class="vehicle-diagnostic__wrapper">
+      <section class="vehicle-diagnostic__selection">
+        <div class="vehicle-diagnostic__selection-left">
+          <vh-vehicle-diagnostic-selection
+            [vehiclesIsLoading]="vm.vehiclesIsLoading"
+            [vehiclesDataSource]="vm.vehiclesDataSource"
+            [vehiclesTotalElements]="vm.vehiclesTotalElements"
+            [vehiclesQueryParams]="vm.vehiclesQueryParams"
+            [selectedVehicle]="vm.selectedVehicle"
+            [selectedFleetOverview]="vm.selectedFleetOverview"
+            [isDiagnosticRunning]="vm.diagnosticSteps.isRunning || false"
+            (eventVehicleSelected)="onVehicleSelected($event)"
+            (eventLoadVehicles)="onLoadVehicles()"
+          />
+        </div>
+        <div class="vehicle-diagnostic__selection-right">
+          <div
+            *ngIf="vm.selectedVehicle.loadingState === 'loading'; else loaded"
+          >
+            <vh-skeleton-loading height="100%" />
+          </div>
+
+          <ng-template #loaded>
+            <div *ngIf="vm.selectedVehicle.loadingState === 'loaded'">
+              <vh-vehicle-image
+                class="image"
+                [vehicle]="vm.selectedVehicle.data"
+                imageMaxWidth="100%"
+                imageHeight="100%"
+              ></vh-vehicle-image>
+            </div>
+          </ng-template>
+        </div>
+      </section>
+      <section class="vehicle-diagnostic__diagnosis">
+        <div class="vehicle-diagnostic__diagnosis-trigger">
+          <vh-button (click)="onStartDiagnosis()">
+            <mat-icon fontIcon="bosch-ic-start-play-frame"></mat-icon>
+            <span i18n>Start diagnosis</span>
+          </vh-button>
+        </div>
+        <vh-divider title="Diagnostic Steps"></vh-divider>
+        <div class="vehicle-diagnostic__diagnosis-status">
+          <vh-vehicle-diagnostic-table
+            [dataSource]="vm.diagnosticSteps"
+            (resetSteps)="onResetSteps()"
+          ></vh-vehicle-diagnostic-table>
+        </div>
+      </section>
+    </div>
+  </div>
+}

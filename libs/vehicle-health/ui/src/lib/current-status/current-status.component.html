@@ -1,0 +1,11 @@
+<div
+  class="current-status"
+  [matTooltip]="
+    (timestamp | date: 'full')
+      ? (status | currentStatus) + ' ' + (timestamp | date: 'full')
+      : ''
+  "
+>
+  <vh-circle [color]="status === 'Active' ? 'success' : 'offline'"></vh-circle>
+  <span>{{ status }}</span>
+</div>

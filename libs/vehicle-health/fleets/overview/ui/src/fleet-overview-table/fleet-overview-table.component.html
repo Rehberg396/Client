@@ -1,0 +1,198 @@
+<table
+  class="fleet-overview-table"
+  mat-table
+  [dataSource]="dataSource"
+  multiTemplateDataRows
+  aria-label="Fleet Overview Table"
+  matSort
+  [matSortActive]="sortBy"
+  [matSortDirection]="sortDirection"
+  (matSortChange)="updateSortChange($event)"
+>
+  <ng-container matColumnDef="image">
+    <th class="header-cell" mat-header-cell *matHeaderCellDef scope="col"></th>
+    <td class="cell" mat-cell *matCellDef="let element">
+      <vh-vehicle-image class="image" [vehicle]="element" imageHeight="100%" />
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="vin">
+    <th class="header-cell" mat-header-cell *matHeaderCellDef scope="col">
+      <div i18n class="no-wrap">VIN</div>
+    </th>
+    <td class="cell" mat-cell *matCellDef="let element">
+      <div>
+        <a
+          (click)="$event.stopPropagation()"
+          [routerLink]="['.', 'vehicle', element.vin]"
+        >
+          {{ element.vin }}
+        </a>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th class="header-cell" mat-header-cell *matHeaderCellDef scope="col">
+      <div i18n class="no-wrap">Name</div>
+    </th>
+    <td class="cell" mat-cell *matCellDef="let element">
+      <vh-vehicle-type
+        [manufacturerName]="element.manufacturerName"
+        [modelLine]="element.modelLine"
+      ></vh-vehicle-type>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="lastUpdated">
+    <th
+      class="header-cell"
+      mat-header-cell
+      mat-sort-header
+      [class.can-sort]="true"
+      *matHeaderCellDef
+      scope="col"
+    >
+      <div i18n class="no-wrap">Last Updated</div>
+    </th>
+    <td class="cell" mat-cell *matCellDef="let element">
+      <div class="last-updated">
+        @if (element.lastUpdated) {
+          {{ element.lastUpdated | date: 'shortDate' }}
+        } @else {
+          <vh-not-available />
+        }
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="risk">
+    <th class="header-cell" mat-header-cell *matHeaderCellDef>
+      <div i18n class="no-wrap">Risk</div>
+    </th>
+    <td class="cell" mat-cell *matCellDef="let element">
+      <vh-risks [risks]="element"></vh-risks>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="criticality">
+    <th class="header-cell" mat-header-cell *matHeaderCellDef>
+      <div i18n class="no-wrap">Criticality</div>
+    </th>
+    <td class="cell" mat-cell *matCellDef="let element">
+      <vh-criticality [value]="element.criticality"></vh-criticality>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="anomaly">
+    <th class="header-cell" mat-header-cell *matHeaderCellDef>
+      <div i18n class="no-wrap">Anomaly</div>
+    </th>
+    <td class="cell" mat-cell *matCellDef="let element">
+      @defer (on viewport) {
+        <vh-powertrain-anomaly
+          [vin]="element.vin"
+          [anomalies]="
+            pdUsecase[element.vin]
+              ? pdUsecase[element.vin].powertrainAnomaly
+              : undefined
+          "
+          (loadAnomalies)="onLoadAnomalies($event)"
+        ></vh-powertrain-anomaly>
+      } @placeholder {
+        <vh-not-available />
+      }
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expand">
+    <th
+      class="header-cell header-cell--expand"
+      mat-header-cell
+      *matHeaderCellDef
+      scope="col"
+    ></th>
+    <td class="cell" mat-cell *matCellDef="let element">
+      <vh-expand-icon
+        [show]="element.criticalityLevel !== 6"
+        [expanded]="expandedElement !== element"
+      ></vh-expand-icon>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td
+      class="cell-detail"
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="displayedColumns.length"
+    >
+      @if (element.criticalityLevel !== 6) {
+        <div
+          class="element-detail"
+          [@detailExpand]="
+            element === expandedElement ? 'expanded' : 'collapsed'
+          "
+        >
+          <vh-fleet-overview-detail [data]="element"></vh-fleet-overview-detail>
+        </div>
+      }
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+  <tr
+    mat-row
+    *matRowDef="let element; columns: displayedColumns"
+    class="element-row"
+    (click)="toggleRow($event, element)"
+  ></tr>
+
+  <tr
+    mat-row
+    *matRowDef="let row; columns: ['expandedDetail']"
+    class="detail-row"
+  ></tr>
+
+  <tr mat-row *matRowDef="let row; columns: ['spacing']" class="spacing"></tr>
+  <ng-container matColumnDef="spacing">
+    <td
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="displayedColumns.length"
+      class="no-border"
+    ></td>
+  </ng-container>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td
+      class="mat-cell no-data-found border-0"
+      [attr.colspan]="displayedColumns.length"
+    >
+      @if (!isLoading) {
+        <span i18n>No data found</span>
+      }
+    </td>
+  </tr>
+
+  <tr
+    mat-header-row
+    *matHeaderRowDef="['loading-progress']"
+    class="loading-progress"
+  ></tr>
+  <ng-container matColumnDef="loading-progress">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      [attr.colspan]="displayedColumns.length"
+    >
+      @if (isLoading) {
+        <mat-progress-bar
+          class="progress-bar"
+          mode="indeterminate"
+        ></mat-progress-bar>
+      }
+    </th>
+  </ng-container>
+</table>

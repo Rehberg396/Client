@@ -1,0 +1,40 @@
+@if (dataSource) {
+  <div class="details">
+
+    <div class="details__title" i18n>{{dataSource.title}} </div>
+
+    <div class="details__step_description">
+      <vh-detail-description-item i18n-title title="Step description"
+        i18n>{{ dataSource.description}}
+      </vh-detail-description-item>
+    </div>
+
+    <div class="details__errors">
+      <div *ngFor="let error of dataSource.errors" class="details__errors__row">
+        <div class="details__errors__item details__errors__item--error">
+          <vh-detail-description-item i18n-title title="Error"
+            i18n>{{ error.title }}
+          </vh-detail-description-item>
+        </div>
+
+        <div class="details__errors__item">
+          <vh-detail-description-item i18n-title title="Possible causes">
+            <ng-container *ngIf="error.causes?.length; else noCauses">
+              <ul>
+                <li *ngFor="let cause of error.causes"
+                  i18n>{{ cause.description }}
+                </li>
+              </ul>
+            </ng-container>
+            <ng-template #noCauses>
+              <p><em><div i18n>No causes available</div></em></p>
+            </ng-template>
+          </vh-detail-description-item>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+@else {
+  No data
+}

@@ -1,0 +1,7 @@
+@import 'abstracts/variables';
+
+.active {
+  background-color: $bosch-blue-50 !important;
+  color: $bosch-white !important;
+  cursor: default;
+}

@@ -1,0 +1,63 @@
+:host {
+  display: block;
+  padding: 1rem;
+  overflow: auto;
+  height: 100%;
+}
+
+.section {
+  &:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+
+  &__title {
+    margin-bottom: 0.8rem;
+  }
+
+  &__list {
+    padding-left: 2rem;
+  }
+
+  &__item {
+    margin-bottom: 0.3rem;
+  }
+}
+
+.changelog {
+  &:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+
+  &__title {
+    margin-bottom: 0.5rem;
+  }
+
+  &__list {
+    padding-left: 2rem;
+  }
+
+  &__item {
+    margin-bottom: 0.3rem;
+  }
+
+  &__id {
+    color: #007bc0;
+  }
+}
+
+.version {
+  &__label {
+    font-weight: bold;
+  }
+
+  &__value {
+    font-weight: bold;
+    color: #007bc0;
+  }
+}
+
+.info {
+  &__name {
+    margin-bottom: 0.5rem;
+  }
+}

@@ -1,0 +1,96 @@
+@import 'abstracts/variables';
+
+$padding-size: 1.25rem;
+
+.deletion-report {
+  &__wrapper {
+    $x3: -($grid-size * 3);
+    $x4: -($grid-size * 4);
+
+    min-width: 20rem;
+    max-height: calc(90vh - $grid-size * 2);
+    overflow: hidden;
+    margin: $x3 $x4 $x4 $x4;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-height: 3rem;
+    padding-left: $padding-size;
+    padding-right: $padding-size;
+  }
+
+  &__close {
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+  }
+
+  &__divider {
+    background-color: $bosch-grey-60;
+    height: 0.0625rem;
+  }
+
+  &__content {
+    padding: 1.5rem $padding-size;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.625rem;
+    padding: $padding-size;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+}
+
+.item:not(:last-child) {
+  margin-bottom: 2rem;
+}
+
+.success {
+  color: $bosch-green-50;
+}
+
+.error {
+  color: $bosch-red-50;
+}
+
+.error-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+
+  tr,
+  th,
+  td,
+  table {
+    border: 1px solid $bosch-grey-60;
+  }
+
+  th {
+    text-align: left;
+  }
+
+  th.vin {
+    width: 0;
+  }
+
+  th,
+  td {
+    padding: 0.5rem 1rem;
+  }
+}

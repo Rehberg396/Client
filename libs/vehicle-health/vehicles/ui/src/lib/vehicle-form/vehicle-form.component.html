@@ -1,0 +1,192 @@
+<div class="form-layout-container">
+  <div class="form-layout__header">
+    <div class="form-layout-label">
+      {{ title }}
+    </div>
+    <div class="form-layout-close">
+      @if (!isLoading()) {
+        <mat-icon fontIcon="bosch-ic-close" (click)="onClose()" />
+      }
+    </div>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-layout__content">
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-input
+            cssClass="w-100"
+            i18n-label
+            label="VIN"
+            formControlName="vin"
+            [errorMsg]="form.controls.vin.hasError('pattern') ? vinErrMsg : ''"
+          />
+        </div>
+        <div class="form-layout__item">
+          <vh-input
+            cssClass="w-100"
+            i18n-label
+            label="Name"
+            formControlName="name"
+            [errorMsg]="
+              form.controls.name.hasError('pattern') ? patternErrMsg : ''
+            "
+          />
+        </div>
+      </div>
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-input
+            cssClass="w-100"
+            i18n-label
+            label="Manufacturer Name"
+            formControlName="manufacturerName"
+            [errorMsg]="
+              form.controls.manufacturerName.hasError('pattern')
+                ? patternErrMsg
+                : ''
+            "
+          />
+        </div>
+        <div class="form-layout__item">
+          <vh-input
+            cssClass="w-100"
+            i18n-label
+            label="Model Line"
+            formControlName="modelLine"
+            [errorMsg]="
+              form.controls.modelLine.hasError('pattern') ? patternErrMsg : ''
+            "
+          />
+        </div>
+      </div>
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-input
+            cssClass="w-100"
+            label="Model Type"
+            i18n-label
+            formControlName="modelType"
+            [errorMsg]="
+              form.controls.modelType.hasError('pattern') ? patternErrMsg : ''
+            "
+          />
+        </div>
+        <div class="form-layout__item">
+          <vh-input
+            cssClass="w-100"
+            type="number"
+            label="Model Year"
+            i18n-label
+            formControlName="modelYear"
+            [errorMsg]="
+              form.controls.modelYear.hasError('pattern') ? modelYearErrMsg : ''
+            "
+          />
+        </div>
+      </div>
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-select
+            cssClass="w-100"
+            i18n-label
+            label="Engine Type"
+            formControlName="engineType"
+            [options]="(engineTypes$ | async)!"
+          />
+        </div>
+      </div>
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-input
+            cssClass="w-100"
+            label="License Plate"
+            i18n-label
+            formControlName="licensePlate"
+            [errorMsg]="
+              form.controls.licensePlate.hasError('pattern')
+                ? patternErrMsg
+                : ''
+            "
+          />
+        </div>
+      </div>
+
+      <h5 class="form-layout__form-aray" i18n>Vehicle Properties</h5>
+      @for (
+        group of form.controls.vehicleProperties.controls;
+        track group;
+        let i = $index
+      ) {
+        <div
+          [formGroup]="$any(group)"
+          class="form-layout__item-wrapper"
+          data-align="stretch"
+        >
+          <div class="form-layout__item">
+            <vh-input
+              cssClass="w-100"
+              i18n-label
+              label="Name"
+              formControlName="name"
+            />
+          </div>
+          <div class="form-layout__item">
+            <vh-input
+              cssClass="w-100"
+              i18n-label
+              label="Value"
+              formControlName="value"
+            />
+          </div>
+          <div class="form-layout__item">
+            <vh-input
+              cssClass="w-100"
+              i18n-label
+              label="Default Value"
+              formControlName="defaultValue"
+            />
+          </div>
+          <mat-icon
+            class="form-layout__delete-icon"
+            [style.visibility]="group.disabled ? 'hidden' : undefined"
+            fontIcon="bosch-ic-delete"
+            (click)="removeVehicleProperty(i)"
+            i18n-matToolTip
+            matTooltip="Delete this vehicle property"
+          />
+        </div>
+      }
+      <div class="form-layout__actions">
+        <mat-icon
+          class="form-layout__add-icon"
+          fontIcon="bosch-ic-add"
+          (click)="addVehicleProperty()"
+          i18n-matToolTip
+          matTooltip="Add a vehicle property"
+        />
+      </div>
+    </div>
+    <div class="form__action-wrapper">
+      <vh-button
+        tabindex="-1"
+        class="add-btn loading-spinner"
+        [disabled]="isLoading()"
+      >
+        @if (isLoading()) {
+          <mat-spinner class="mr-1" [diameter]="24"></mat-spinner>
+        }
+        {{ buttonLabel }}
+      </vh-button>
+      <vh-button
+        buttonType="button"
+        tabindex="-1"
+        type="secondary"
+        (click)="onClose()"
+        [disabled]="isLoading()"
+        i18n
+      >
+        Cancel
+      </vh-button>
+    </div>
+  </form>
+</div>

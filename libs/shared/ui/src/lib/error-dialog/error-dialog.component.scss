@@ -1,0 +1,49 @@
+@import 'abstracts/variables';
+
+.error-dialog {
+  &__wrapper {
+    min-width: 20rem;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-height: 3rem;
+    margin-top: -1.5rem;
+  }
+
+  &__close {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: relative;
+    left: 1.25rem;
+    cursor: pointer;
+  }
+
+  &__divider {
+    background-color: $bosch-grey-60;
+    height: 0.0625rem;
+    margin: 0 -2rem;
+  }
+
+  &__content {
+    padding: 0.5rem 0;
+  }
+
+  &__content-message {
+    word-break: break-word;
+    font-weight: 500;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,113 @@
+<table
+  class="vehicle-diagnostic-table"
+  mat-table
+  [dataSource]="dataSource.loadingState === 'loaded' ? dataSource.data : []"
+  multiTemplateDataRows
+  aria-label="Vehicle Diagnostic"
+>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+  <tr *ngIf="dataSource.loadingState === 'loading'">
+    <td [attr.colspan]="displayedColumns.length">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </td>
+  </tr>
+
+  <tr
+    mat-row
+    *matRowDef="let element; columns: displayedColumns"
+    class="element-row"
+    (click)="onToggle($event, element)"
+  ></tr>
+
+  <tr
+    mat-row
+    *matRowDef="let element; columns: ['expandedDetail']"
+    class="detail-row"
+  ></tr>
+
+  <tr mat-row *matRowDef="let row; columns: ['progress']" class="progress"></tr>
+
+  <tr mat-row *matRowDef="let row; columns: ['spacing']" class="spacing"></tr>
+
+  <ng-container matColumnDef="status">
+    <th
+      scope="col"
+      class="header-cell status"
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      <div class="text-normal" i18n>Status</div>
+    </th>
+    <div class="status-t">
+      <td class="status-cell" mat-cell *matCellDef="let element">
+        <vh-status [status]="element.status"></vh-status>
+      </td>
+    </div>
+  </ng-container>
+
+  <ng-container matColumnDef="step">
+    <th scope="col" class="header-cell step" mat-header-cell *matHeaderCellDef>
+      <div class="text-normal" i18n>Step</div>
+    </th>
+    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="expand">
+    <th
+      scope="col"
+      class="header-cell header-cell--expand action-cell"
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      <vh-reset-icon (click)="onReset()"></vh-reset-icon>
+    </th>
+    <td class="cell action-cell" mat-cell *matCellDef="let element">
+      <vh-expand-icon
+        [expanded]="expandedElement !== element"
+        (click)="$event.stopPropagation(); onToggle($event, element)"
+      /></td
+  ></ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td
+      class="cell-detail"
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="displayedColumns.length"
+    >
+      <div
+        class="expand-detail"
+        [@detailExpand]="element.status === true ? 'expanded' : 'collapsed'"
+      >
+        <vh-vehicle-diagnostic-details
+          *ngIf="element.title === expandedElement?.title"
+          [dataSource]="element"
+        >
+        </vh-vehicle-diagnostic-details>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="spacing">
+    <td
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="displayedColumns.length"
+      class="no-border"
+    ></td>
+  </ng-container>
+
+  <ng-container matColumnDef="progress">
+    <td
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="displayedColumns.length"
+    >
+      <mat-progress-bar
+        *ngIf="element.status === 2"
+        mode="indeterminate"
+      ></mat-progress-bar>
+    </td>
+  </ng-container>
+</table>

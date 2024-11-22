@@ -1,0 +1,20 @@
+{
+  "name": "feat-vh-config",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/vehicle-health/core/config/src",
+  "prefix": "vh",
+  "projectType": "library",
+  "tags": ["type:ui", "scope:vehicle-health"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/vehicle-health/core/config/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

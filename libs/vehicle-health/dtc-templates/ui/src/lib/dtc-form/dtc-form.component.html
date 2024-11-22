@@ -1,0 +1,246 @@
+<div class="form-layout-container">
+  <div class="form-layout__header">
+    <div class="form-layout-label">
+      {{ title }}
+    </div>
+    <div class="form-layout-close">
+      @if (!isLoading()) {
+        <mat-icon fontIcon="bosch-ic-close" (click)="onClose()" />
+      }
+    </div>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-layout__content">
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-input
+            cssClass="w-100"
+            i18n-label
+            label="Source"
+            formControlName="source"
+          >
+          </vh-input>
+        </div>
+        <div class="form-layout__item">
+          <vh-input
+            cssClass="w-100"
+            i18n-label
+            label="Protocol Standard"
+            formControlName="protocolStandard"
+          >
+          </vh-input>
+        </div>
+      </div>
+
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-input
+            cssClass="w-100"
+            i18n-label
+            label="Dtc Code"
+            formControlName="dtcCode"
+          >
+          </vh-input>
+        </div>
+        <div class="form-layout__item">
+          <vh-input
+            cssClass="w-100"
+            i18n-label
+            label="OEM"
+            formControlName="oem"
+          >
+          </vh-input>
+        </div>
+      </div>
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-select
+            i18n-label
+            label="Engine Type"
+            [cssClass]="'w-100'"
+            [errorMsg]="
+              form.controls['engineType'].hasError('validationError')
+                ? form.controls['engineType'].errors!['validationError']
+                : ''
+            "
+            formControlName="engineType"
+            [options]="data.options.engineTypes"
+          ></vh-select>
+        </div>
+      </div>
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-input
+            i18n-label
+            label="DTC Description"
+            cssClass="w-100"
+            formControlName="description"
+          >
+          </vh-input>
+        </div>
+        <div class="form-layout__item">
+          <vh-input
+            i18n-label
+            label="Possible Cause"
+            cssClass="w-100"
+            formControlName="possibleCause"
+          >
+          </vh-input>
+        </div>
+      </div>
+
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-input
+            i18n-label
+            label="Symptom"
+            cssClass="w-100"
+            formControlName="symptom"
+          >
+          </vh-input>
+        </div>
+        <div class="form-layout__item">
+          <vh-select
+            i18n-label
+            label="Criticality"
+            [cssClass]="'w-100'"
+            formControlName="criticality"
+            [options]="data.options.criticalities"
+          ></vh-select>
+        </div>
+      </div>
+
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-input
+            i18n-label
+            label="Category"
+            cssClass="w-100"
+            formControlName="category"
+          >
+          </vh-input>
+        </div>
+        <div class="form-layout__item">
+          <vh-input
+            i18n-label
+            label="Group"
+            cssClass="w-100"
+            formControlName="group"
+          >
+          </vh-input>
+        </div>
+      </div>
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-input
+            i18n-label
+            label="Comment"
+            cssClass="w-100"
+            formControlName="comment"
+          >
+          </vh-input>
+        </div>
+      </div>
+
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-select
+            i18n-label
+            label="Risk Safety"
+            [cssClass]="'w-100'"
+            formControlName="riskSafety"
+            [options]="data.options.risks"
+          ></vh-select>
+        </div>
+        <div class="form-layout__item">
+          <vh-select
+            i18n-label
+            label="Risk Damage"
+            [cssClass]="'w-100'"
+            formControlName="riskDamage"
+            [options]="data.options.risks"
+          ></vh-select>
+        </div>
+      </div>
+
+      <div class="form-layout__item-wrapper" data-align="stretch">
+        <div class="form-layout__item">
+          <vh-select
+            i18n-label
+            label="Risk Availability"
+            cssClass="w-100"
+            formControlName="riskAvailability"
+            [options]="data.options.risks"
+          ></vh-select>
+        </div>
+        <div class="form-layout__item">
+          <vh-select
+            i18n-label
+            label="Risk Emissions"
+            [cssClass]="'w-100'"
+            formControlName="riskEmissions"
+            [options]="data.options.risks"
+          ></vh-select>
+        </div>
+      </div>
+
+      <h5 class="form-layout__form-aray" i18n>Recommendations</h5>
+      @for (
+        control of form.controls.recommendations.controls;
+        track control;
+        let i = $index
+      ) {
+        <div class="form-layout__item-wrapper" data-align="stretch">
+          <div class="form-layout__item">
+            <vh-input
+              cssClass="w-100"
+              i18n-label
+              label="Recommendation"
+              [formControl]="control"
+            />
+          </div>
+          <mat-icon
+            class="form-layout__delete-icon"
+            fontIcon="bosch-ic-delete"
+            (click)="onRemoveRecommendation(i)"
+            i18n-matToolTip
+            matTooltip="Remove this recommendation"
+          />
+        </div>
+      }
+      <div class="form-layout__actions">
+        <mat-icon
+          class="form-layout__add-icon"
+          fontIcon="bosch-ic-add"
+          (click)="onAddRecommendation()"
+          i18n-matToolTip
+          matTooltip="Add a recommendation"
+        />
+      </div>
+    </div>
+
+    <div class="form__action-wrapper">
+      <vh-button
+        tabindex="-1"
+        class="loading-spinner"
+        [disabled]="isLoading()"
+        data-submit-button
+      >
+        @if (isLoading()) {
+          <mat-spinner class="mr-1" [diameter]="24"></mat-spinner>
+        }
+        {{ buttonLabel }}
+      </vh-button>
+      <vh-button
+        tabindex="-1"
+        type="secondary"
+        buttonType="button"
+        (click)="onClose()"
+        i18n
+        [disabled]="isLoading()"
+      >
+        Cancel
+      </vh-button>
+    </div>
+  </form>
+</div>

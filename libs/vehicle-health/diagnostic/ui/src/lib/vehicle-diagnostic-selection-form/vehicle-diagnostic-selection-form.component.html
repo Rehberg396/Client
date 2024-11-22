@@ -1,0 +1,61 @@
+<div class="selection-form-container form-layout-container">
+  <div class="selection-form__header form-layout__header">
+    <div class="selection-form__header__label form-layout-label" i18n>
+      Vehicle selection
+    </div>
+    <div class="selection-form__header__close form-layout-close">
+      <mat-icon fontIcon="bosch-ic-close" (click)="onClose()" />
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="selection_form__content form-layout__item">
+      <div class="selection_form__content__toolbar">
+        <vh-search-input
+          i18n-label
+          label="Search"
+          i18n-placeholder
+          placeholder="Enter VIN or Name"
+          i18n-matTooltip
+          matTooltip="You can search by VIN and Name"
+          (search)="onSearch($event)"
+        />
+      </div>
+    </div>
+
+    <div class="selection_form__content__table form-layout__item">
+      <vh-vehicle-diagnostic-selection-table
+        [isLoading]="(isLoading$ | async) ?? true"
+        [dataSource]="(dataSource$ | async) || []"
+        [selectedElement]="getSelected()"
+        (eventVehicleSelected)="setSelected($event)"
+      >
+      </vh-vehicle-diagnostic-selection-table>
+
+      <div class="selection_form__content__table-paginator">
+        <mat-paginator
+          [length]="(totalElements$ | async) || 0"
+          [pageSize]="(queryParams$ | async)?.['size'] || 0"
+          [pageIndex]="(queryParams$ | async)?.['page'] || 0"
+          [hidePageSize]="true"
+          (page)="onPageChange($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+
+    <div class="selection_form__content__button form__action-wrapper">
+      <vh-button tabindex="-1" class="add-btn" [disabled]="!isSelected()" i18n
+        >Submit
+      </vh-button>
+      <vh-button
+        buttonType="button"
+        tabindex="-1"
+        type="secondary"
+        (click)="onClose()"
+        i18n
+        >Cancel
+      </vh-button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,24 @@
+.vehicle-diagnostic-selection {
+  &__header {
+    margin-bottom: 1rem;
+  }
+
+  &__group {
+    display: flex;
+    align-items: baseline;
+
+    & > *:not(:last-child) {
+      margin-right: 1rem;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .flex-center {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}

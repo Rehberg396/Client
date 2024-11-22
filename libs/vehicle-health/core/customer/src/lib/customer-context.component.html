@@ -1,0 +1,24 @@
+@if (customers(); as customers) {
+  @if (customers.length) {
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="customerContextMenu"
+      matTooltip="Customers"
+      i18n-matTooltip
+    >
+      <mat-icon fontIcon="bosch-ic-address-consumer-data" />
+    </button>
+
+    <mat-menu #customerContextMenu="matMenu">
+      @for (customer of customers; track customer) {
+        <button
+          mat-menu-item
+          (click)="changeCustomer.emit(customer)"
+          [class.active]="customer === currentCustomer()"
+        >
+          {{ customer }}
+        </button>
+      }
+    </mat-menu>
+  }
+}

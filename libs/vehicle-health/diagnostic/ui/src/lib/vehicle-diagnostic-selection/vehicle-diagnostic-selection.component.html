@@ -1,0 +1,121 @@
+<div class="vehicle-diagnostic-selection">
+  <div class="vehicle-diagnostic-selection__header">
+    <vh-button (click)="onSelect()" [hidden]="isDiagnosticRunning">
+      <mat-icon fontIcon="bosch-ic-car-desktop-graph"></mat-icon>
+      <span i18n>Vehicle selection</span>
+    </vh-button>
+  </div>
+
+  <div class="vehicle-diagnostic-selection__content">
+    <vh-divider title="Selected Vehicle"></vh-divider>
+    <div class="vehicle-diagnostic-selection__group">
+      <vh-vehicle-item
+        [isLoading]="selectedVehicle.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>VIN</div>
+        <div important>
+          <div
+            *ngIf="
+              selectedVehicle.loadingState === 'loaded' &&
+                selectedVehicle?.data?.vin;
+              else notAvailable
+            "
+          >
+            {{ selectedVehicle.data.vin }}
+          </div>
+          <ng-template #notAvailable>
+            <vh-not-available></vh-not-available>
+          </ng-template>
+        </div>
+      </vh-vehicle-item>
+
+      <vh-vehicle-item
+        [isLoading]="selectedVehicle.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Name</div>
+        <div important>
+          <div
+            *ngIf="
+              selectedVehicle.loadingState === 'loaded' &&
+                selectedVehicle?.data?.name;
+              else notAvailable
+            "
+          >
+            {{ selectedVehicle.data.name }}
+          </div>
+          <ng-template #notAvailable>
+            <vh-not-available></vh-not-available>
+          </ng-template>
+        </div>
+      </vh-vehicle-item>
+
+      <vh-vehicle-item
+        [isLoading]="selectedFleetOverview.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Last Update</div>
+        <div important>
+          <div
+            *ngIf="
+              selectedFleetOverview.loadingState === 'loaded' &&
+                selectedFleetOverview?.data?.lastUpdated;
+              else notAvailable
+            "
+          >
+            {{ selectedFleetOverview.data.lastUpdated }}
+          </div>
+          <ng-template #notAvailable>
+            <vh-not-available></vh-not-available>
+          </ng-template>
+        </div>
+      </vh-vehicle-item>
+    </div>
+
+    <div class="vehicle-diagnostic-selection__group">
+      <vh-vehicle-item
+        [isLoading]="selectedFleetOverview.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Risks</div>
+        <div important>
+          <div
+            *ngIf="
+              selectedFleetOverview.loadingState === 'loaded' &&
+                selectedFleetOverview?.data;
+              else notAvailable
+            "
+          >
+            <vh-risks [risks]="selectedFleetOverview.data"></vh-risks>
+          </div>
+          <ng-template #notAvailable>
+            <vh-not-available></vh-not-available>
+          </ng-template>
+        </div>
+      </vh-vehicle-item>
+
+      <vh-vehicle-item
+        [isLoading]="selectedFleetOverview.loadingState === 'loading'"
+        [isImportant]="true"
+      >
+        <div name i18n>Detections</div>
+        <div important>
+          <div
+            *ngIf="
+              selectedFleetOverview.loadingState === 'loaded' &&
+                selectedFleetOverview?.data;
+              else notAvailable
+            "
+          >
+            <vh-risks [risks]="selectedFleetOverview.data"></vh-risks>
+            <!--TO-DO-->
+          </div>
+          <ng-template #notAvailable>
+            <vh-not-available></vh-not-available>
+          </ng-template>
+        </div>
+      </vh-vehicle-item>
+    </div>
+  </div>
+</div>

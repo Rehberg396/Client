@@ -1,0 +1,95 @@
+@import 'abstracts/variables';
+
+.notification {
+  &__header {
+    padding: 0.3rem 1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__timestamp {
+    font-size: 0.8rem;
+  }
+
+  &__viewport {
+    height: 360px;
+    width: 400px;
+  }
+
+  &__item {
+    padding: 0.5rem 1rem;
+    display: flex;
+    gap: 0.5rem;
+    height: 120px;
+
+    &:hover {
+      background-color: #e0e2e5;
+    }
+
+    &--unread {
+      position: relative;
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: $bosch-blue-50;
+        position: absolute;
+        top: 26px;
+        left: 8px;
+      }
+    }
+  }
+
+  &__empty {
+    padding: 0.5rem 1rem;
+  }
+
+  &__loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__message {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+
+  &__type {
+    font-size: 0.8rem;
+  }
+
+  &__icon {
+    padding-top: 0.5rem;
+
+    .error {
+      color: $bosch-red-50;
+    }
+
+    .info {
+      color: $bosch-green-50;
+    }
+
+    .warning {
+      color: $bosch-yellow-85;
+    }
+  }
+}
+
+.active {
+  color: $bosch-blue-50;
+}

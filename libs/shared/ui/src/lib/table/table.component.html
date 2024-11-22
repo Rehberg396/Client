@@ -1,0 +1,140 @@
+<table
+  aria-label="table"
+  mat-table
+  matSort
+  (matSortChange)="sortChange.emit($event)"
+  [dataSource]="dataSource()"
+  [matSortActive]="sortBy()"
+  [matSortDirection]="sortDirection()"
+>
+  @for (config of configs(); track config.key) {
+    <ng-container [matColumnDef]="config.key">
+      <th
+        [class.can-sort]="config.canSort"
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        vhResizableColumn
+        [disabled]="!config.canSort"
+        [resizableElementClass]="
+          displayedColumns().length > 6 ? '.mat-sort-header-container' : ''
+        "
+        [style.min-width]="config.minWidth"
+        [style.width]="
+          config.type === 'selection' || config.type === 'action'
+            ? 0
+            : undefined
+        "
+      >
+        @if (config.type === 'selection') {
+          <mat-checkbox
+            color="primary"
+            (change)="$event ? toggleAllRows() : null"
+            [checked]="selection().hasValue() && isAllSelected()"
+            [indeterminate]="selection().hasValue() && !isAllSelected()"
+            [matTooltip]="
+              selection().hasValue() && isAllSelected()
+                ? 'Deselect All'
+                : 'Select All'
+            "
+          />
+        } @else {
+          {{ config.label }}
+        }
+      </th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        @switch (config.type) {
+          @case ('text') {
+            {{ element[config.key] }}
+          }
+          @case ('number') {
+            {{ element[config.key] | number: config.format }}
+          }
+          @case ('date') {
+            {{ element[config.key] | date: config.format }}
+          }
+          @case ('templateRef') {
+            <ng-container
+              [ngTemplateOutlet]="config.templateRef()"
+              [ngTemplateOutletContext]="{
+                $implicit: element[config.key],
+                row: element,
+              }"
+            ></ng-container>
+          }
+          @case ('action') {
+            <div class="button-wrapper" (click)="$event.stopPropagation()">
+              @for (action of config.actions; track action) {
+                @if (!((action.disable && action.disable(element)) || false)) {
+                  <vh-button
+                    [noBorder]="true"
+                    (click)="action?.onClick(element)"
+                  >
+                    <mat-icon
+                      class="icon"
+                      [fontIcon]="action.icon(element)"
+                      [matTooltip]="
+                        action.tooltip ? action.tooltip(element) : ''
+                      "
+                    ></mat-icon>
+                  </vh-button>
+                }
+              }
+            </div>
+          }
+          @case ('selection') {
+            <div (click)="$event.stopPropagation()">
+              <mat-checkbox
+                color="primary"
+                (click)="$event.stopPropagation()"
+                (change)="toggleRow(element)"
+                [checked]="selection().isSelected(element)"
+              />
+            </div>
+          }
+        }
+      </td>
+    </ng-container>
+  }
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns()"
+    class="element-row"
+    [class.selected]="showSelectedRow() && selectedData() === row"
+    [class.highlight]="showHighlight()(row)"
+    (click)="handleClick($event, row)"
+  ></tr>
+
+  <tr
+    mat-header-row
+    *matHeaderRowDef="['loading-progress']"
+    class="loading-progress"
+  ></tr>
+  <ng-container matColumnDef="loading-progress">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      [attr.colspan]="displayedColumns().length"
+    >
+      @if (isLoading()) {
+        <mat-progress-bar
+          class="progress-bar"
+          mode="indeterminate"
+        ></mat-progress-bar>
+      }
+    </th>
+  </ng-container>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td
+      class="mat-cell no-data-found border-0"
+      [attr.colspan]="displayedColumns().length"
+    >
+      @if (!isLoading) {
+        <span i18n>No data found</span>
+      }
+    </td>
+  </tr>
+</table>

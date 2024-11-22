@@ -1,0 +1,11 @@
+<div
+  class="filter"
+  [ngClass]="{ active: totalFilterChecked > 0 }"
+  (click)="openDialog()"
+>
+  <mat-icon fontIcon="bosch-ic-filter"> </mat-icon>
+  <span i18n>Filter</span>
+  @if (totalFilterChecked > 0) {
+    ({{ totalFilterChecked }})
+  }
+</div>

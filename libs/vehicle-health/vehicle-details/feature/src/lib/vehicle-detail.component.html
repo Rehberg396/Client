@@ -1,0 +1,39 @@
+@if (vm$ | async; as vm) {
+  <div class="vehicle-detail">
+    <div class="vehicle-detail__wrapper">
+      <section class="vehicle-detail__info">
+        <div class="vehicle-detail__info-left">
+          <vh-vehicle-detail-info
+            [vehicle]="vm.vehicle"
+            [fleetOverview]="vm.fleetOverview"
+            [batteryHealth]="vm.batteryHealth"
+            [powertrainAnomaly]="vm.powertrainAnomaly"
+          />
+        </div>
+        <div class="vehicle-detail__info-right">
+          @if (vm.vehicle.loadingState === 'loading') {
+            <vh-skeleton-loading style="height: 100%" />
+          } @else if (vm.vehicle.loadingState === 'loaded') {
+            <vh-vehicle-image
+              class="image"
+              [vehicle]="vm.vehicle.data"
+              imageMaxWidth="100%"
+              imageHeight="100%"
+            />
+          }
+        </div>
+      </section>
+      <section>
+        <vh-divider title="Condition Details"></vh-divider>
+        <vh-vehicle-detail-table
+          [vin]="vm.vin"
+          [dataSource]="vm.dataSource"
+          [expandedElement]="expandedElement"
+          (filterCriticality)="onFilterCriticality($event)"
+          (toggle)="onToggle($event)"
+          (loadPowertrainHistory)="onLoadPowertrainHistory($event)"
+        />
+      </section>
+    </div>
+  </div>
+}

@@ -1,0 +1,43 @@
+<h1 mat-dialog-title i18n>Filter</h1>
+<div mat-dialog-content>
+  <div class="filter-view-container">
+    <div class="filter-view">
+      <mat-list>
+        @for (item of cloneTableFilterOption; track item.key) {
+          <mat-list-item
+            [ngClass]="{ active: filterOptionSelected?.key === item.key }"
+            (click)="onSelectFilterOption(item)"
+          >
+            <div class="list-item">
+              <div>{{ item.title }}</div>
+              @if (item.isChecked) {
+                <div class="flex-center">
+                  <mat-icon fontIcon="bosch-ic-checkmark"> </mat-icon>
+                </div>
+              }
+            </div>
+          </mat-list-item>
+        }
+      </mat-list>
+    </div>
+    <mat-divider vertical></mat-divider>
+    <div class="filter-view">
+      @for (item of filterOptionSelected?.selectOption; track item.value) {
+        <div class="checkbox-container">
+          <mat-checkbox
+            tabIndex="-1"
+            color="primary"
+            (click)="onFilterChecked()"
+            [(ngModel)]="item.isChecked"
+          >
+            {{ item.label }}
+          </mat-checkbox>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="filter-dialog__actions">
+  <vh-button (click)="onApplyFilter()" class="mr-1" i18n> Apply </vh-button>
+  <vh-button (click)="onClose()" [type]="'secondary'" i18n> Cancel </vh-button>
+</div>

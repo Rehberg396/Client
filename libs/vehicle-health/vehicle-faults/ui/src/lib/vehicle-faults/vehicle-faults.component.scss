@@ -1,0 +1,11 @@
+.vehicle-faults {
+  &__toolbar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &__table {
+    overflow-x: auto;
+  }
+}

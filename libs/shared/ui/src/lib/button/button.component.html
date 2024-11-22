@@ -1,0 +1,15 @@
+<button
+  [type]="buttonType"
+  class="button-wrapper"
+  [ngClass]="[class, size, type]"
+  [class.no-border]="noBorder"
+  [disabled]="disabled"
+  (click)="onHandleClick()"
+>
+  @if (loading) {
+    <div class="loading-spinner">
+      <mat-spinner class="mr-1" [diameter]="24"></mat-spinner>
+    </div>
+  }
+  <ng-content></ng-content>
+</button>

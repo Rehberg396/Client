@@ -1,0 +1,32 @@
+<div class="vehicle-faults">
+  <div class="vehicle-faults__toolbar">
+    <div>
+      VIN: <strong>{{ vin() }}</strong>
+    </div>
+    <div class="ml-3">
+      <vh-column-config
+        [configs]="tableColumnConfigs()"
+        (configChange)="displayedColumnsChange.emit($event)"
+      >
+      </vh-column-config>
+    </div>
+  </div>
+  <div class="vehicle-faults__table">
+    <vh-table
+      [dataSource]="dataSource()"
+      [isLoading]="isLoading()"
+      [errorMessage]="errorMessage()"
+      [columnConfigs]="columnConfigs()"
+      [sortBy]="sortBy()"
+      [sortDirection]="sortDirection()"
+      (sortChange)="sortChange.emit($event)"
+    ></vh-table>
+  </div>
+
+  <mat-paginator
+    [length]="totalElements()"
+    [pageIndex]="page()"
+    [pageSize]="size()"
+    (page)="pageChange.emit($event)"
+  ></mat-paginator>
+</div>

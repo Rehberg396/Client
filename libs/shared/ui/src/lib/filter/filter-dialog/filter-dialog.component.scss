@@ -1,0 +1,45 @@
+@import 'legacy/variables';
+
+.filter-view-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  min-width: 700px;
+
+  .filter-view {
+    width: 47%;
+
+    .checkbox-container:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+mat-list-item {
+  font-size: 16px;
+  line-height: initial;
+  height: auto;
+  min-height: 48px;
+  box-sizing: border-box;
+  border-width: 0 0 1px 0;
+  border-color: $bosch-black;
+  border-style: solid;
+  border-radius: 0;
+  cursor: pointer !important;
+  &.active {
+    background-color: $color-input-focus;
+  }
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-dialog__actions {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,0 +1,45 @@
+<div class="processing-stage">
+  <div class="processing-stage__header" i18n>Processing History</div>
+  <div class="processing-stage__body">
+    @if (processingStages$ | async; as processingStages) {
+      @if (processingStages.isLoading) {
+        <div class="spinner">
+          <mat-spinner diameter="32"></mat-spinner>
+        </div>
+      } @else {
+        <mat-stepper orientation="vertical">
+          @for (stage of processingStages.entries; track stage) {
+            <mat-step>
+              <ng-template matStepLabel>
+                <strong>{{ stage.label }} ({{ stage.content.length }})</strong>
+              </ng-template>
+              <ng-template matStepContent>
+                <cdk-virtual-scroll-viewport
+                  itemSize="32"
+                  class="date-time-viewport"
+                >
+                  <ul class="time-list">
+                    <li *cdkVirtualFor="let dateTime of stage?.content">
+                      {{ dateTime | date: 'medium' }}
+                    </li>
+                  </ul>
+                </cdk-virtual-scroll-viewport>
+              </ng-template>
+            </mat-step>
+          }
+
+          <ng-template matStepperIcon="edit" let-i="index">
+            {{ i + 1 }}
+          </ng-template>
+          <ng-template matStepperIcon="done" let-i="index">
+            {{ i + 1 }}
+          </ng-template>
+        </mat-stepper>
+      }
+    }
+  </div>
+
+  <div class="processing-stage__actions">
+    <vh-button (click)="close()" i18n> Close </vh-button>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="breadcrumb">
+  @if (breadcrumbs(); as breadcrumbs) {
+    @for (breadcrumb of breadcrumbs; track breadcrumb.url; let isLast = $last) {
+      <span class="breadcrumb__item">
+        @if (isLast) {
+          {{ breadcrumb.label }}
+        } @else {
+          <a
+            class="breadcrumb__link"
+            routerLinkActive="breadcrumb__link--active"
+            [routerLink]="breadcrumb.url"
+            [queryParams]="breadcrumb.defaultQueryParams"
+            [attr.data-test]="breadcrumb.defaultQueryParams"
+            [routerLinkActiveOptions]="routerLinkActiveOptions"
+            >{{ breadcrumb.label }}</a
+          >
+        }
+      </span>
+    }
+  }
+</div>

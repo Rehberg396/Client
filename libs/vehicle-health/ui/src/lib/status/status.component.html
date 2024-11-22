@@ -1,0 +1,10 @@
+@if (status) {
+  <div class="status">
+    <mat-icon
+      fontIcon= '{{ status | statusLevelIcon }}'
+      i18n-matTooltip
+      [matTooltip]="(status | statusLevelCategory)"
+      [style.color]="status | statusLevelColor"
+    ></mat-icon>
+  </div>
+}

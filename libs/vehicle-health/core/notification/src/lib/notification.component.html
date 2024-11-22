@@ -1,0 +1,156 @@
+<button
+  mat-icon-button
+  [matMenuTriggerFor]="notificationsMenu"
+  (menuOpened)="menuOpened()"
+  (menuClosed)="menuClosed()"
+  matTooltip="Notifications"
+  i18n-matTooltip
+>
+  @if (opened()) {
+    <mat-icon fontIcon="bosch-ic-notification-active" class="active" />
+  } @else {
+    <mat-icon fontIcon="bosch-ic-notification" />
+  }
+  @if (unreadCount$ | async; as count) {
+    <span [matBadge]="count"></span>
+  }
+</button>
+
+<mat-menu #notificationsMenu="matMenu" class="notification-menu">
+  @if (opened()) {
+    <div class="notification" (click)="$event.stopPropagation()">
+      <div class="notification__header">
+        <span i18n>Notifications</span>
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="filterMenu"
+          [class.active]="filter()"
+          matTooltip="Filter"
+          i18n-matTooltip
+        >
+          <mat-icon fontIcon="bosch-ic-menu-checkmark"></mat-icon>
+        </button>
+        <mat-menu #filterMenu="matMenu" class="filter">
+          <button
+            mat-menu-item
+            (click)="updateFilter(filterMenu)"
+            [class.active]="!filter()"
+          >
+            <span i18n>Show All</span>
+          </button>
+          <button
+            mat-menu-item
+            (click)="updateFilter(filterMenu, 'unread')"
+            [class.active]="filter() === 'unread'"
+          >
+            <span i18n>Show Unread</span>
+          </button>
+          <button
+            mat-menu-item
+            (click)="updateFilter(filterMenu, 'read')"
+            [class.active]="filter() === 'read'"
+          >
+            <span i18n>Show Read</span>
+          </button>
+        </mat-menu>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="notification__container">
+        @if (notifications$ | async; as notifications) {
+          <cdk-virtual-scroll-viewport
+            #scroll
+            itemSize="120"
+            minBufferPx="360"
+            maxBufferPx="480"
+            class="notification__viewport"
+            (scrolledIndexChange)="handleScrolledIndexChange(scroll)"
+          >
+            <div
+              *cdkVirtualFor="let notification of notifications; let i = index"
+              class="notification__item"
+              [class.notification__item--unread]="
+                notification.messageStatus === 'unread'
+              "
+            >
+              <div class="notification__icon">
+                @switch (notification.category) {
+                  @case ('manual_update_enginetype') {
+                    <mat-icon
+                      class="warning"
+                      fontIcon="bosch-ic-alert-warning"
+                    />
+                  }
+                  @default {
+                    <mat-icon class="info" fontIcon="bosch-ic-alert-info" />
+                  }
+                }
+              </div>
+              <div class="notification__content">
+                <div
+                  class="notification__message"
+                  (click)="handleClick(i, notificationsMenu)"
+                >
+                  {{ notification | metadata }} {{ notification.content }}
+                </div>
+                <div class="notification__timestamp">
+                  {{ notification.createdDate | distanceToNow: locale }}
+                </div>
+              </div>
+              <div class="notification__actions">
+                <button mat-icon-button [matMenuTriggerFor]="actionMenu">
+                  <mat-icon fontIcon="bosch-ic-options-vertical"></mat-icon>
+                </button>
+                <mat-menu #actionMenu="matMenu">
+                  @if (
+                    notification.category === 'manual_update_enginetype' &&
+                    notification.metadata.vin
+                  ) {
+                    <button
+                      mat-menu-item
+                      (click)="
+                        $event.stopPropagation();
+                        updateEngineType(i, actionMenu)
+                      "
+                    >
+                      <span i18n>Update now</span>
+                    </button>
+                  }
+                  @if (notification.messageStatus === 'unread') {
+                    <button
+                      mat-menu-item
+                      (click)="
+                        $event.stopPropagation(); markAsRead(i, actionMenu)
+                      "
+                    >
+                      <span i18n>Mark as read</span>
+                    </button>
+                  }
+                  @if (notification.messageStatus === 'read') {
+                    <button
+                      mat-menu-item
+                      (click)="
+                        $event.stopPropagation(); markAsUnread(i, actionMenu)
+                      "
+                    >
+                      <span i18n>Mark as unread</span>
+                    </button>
+                  }
+                </mat-menu>
+              </div>
+            </div>
+            @if (isLoading()) {
+              <div class="notification__loading-indicator">
+                <mat-spinner [diameter]="32"></mat-spinner>
+              </div>
+            }
+            @if (!isLoading() && notifications?.length === 0) {
+              <div class="notification__empty" i18n>
+                There are no notifications
+              </div>
+            }
+          </cdk-virtual-scroll-viewport>
+        }
+      </div>
+    </div>
+  }
+</mat-menu>

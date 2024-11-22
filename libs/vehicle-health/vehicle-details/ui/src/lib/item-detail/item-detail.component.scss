@@ -1,0 +1,30 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+
+  .image {
+    display: flex;
+    align-items: center;
+  }
+
+  .icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 3rem;
+  }
+
+  .name {
+    font-weight: 700;
+  }
+
+  .spacing {
+    height: 0.5rem;
+  }
+
+  .spinner {
+    display: inline-block;
+  }
+}

@@ -1,0 +1,40 @@
+.vehicle-detail-info {
+  &__header {
+    margin-bottom: 1rem;
+  }
+  &__primary {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+  }
+
+  &__secondary {
+    font-size: 14px;
+    font-weight: 400;
+    color: #7e7e7e;
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__group {
+    display: flex;
+    align-items: baseline;
+
+    & > *:not(:last-child) {
+      margin-right: 1rem;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .flex-center {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}

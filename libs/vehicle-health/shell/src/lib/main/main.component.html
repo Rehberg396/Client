@@ -1,0 +1,12 @@
+<div class="main">
+  <div>
+    <ng-content select="vh-sidenav"></ng-content>
+  </div>
+  <div class="right">
+    <ng-content select="vh-header"></ng-content>
+    <main class="content">
+      <ng-content></ng-content>
+    </main>
+    <ng-content select="vh-footer"></ng-content>
+  </div>
+</div>

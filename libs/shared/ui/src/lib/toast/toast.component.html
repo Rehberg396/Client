@@ -1,0 +1,23 @@
+<div class="custom-toast-container" [ngClass]="toastData.type" [@show]>
+  <div class="custom-toast-content">
+    <div class="custom-toast-content__icon">
+      <mat-icon
+        [fontIcon]="
+          toastData.type === 'error'
+            ? 'bosch-ic-alert-error'
+            : 'bosch-ic-alert-success'
+        "
+      >
+      </mat-icon>
+    </div>
+    <p class="custom-toast-content__message">
+      {{ toastData.message }}
+    </p>
+  </div>
+  <mat-icon
+    class="custom-toast__close"
+    fontIcon="bosch-ic-close"
+    (click)="onClick()"
+  >
+  </mat-icon>
+</div>

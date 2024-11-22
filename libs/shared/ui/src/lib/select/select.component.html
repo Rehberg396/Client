@@ -1,0 +1,33 @@
+<mat-form-field [class]="cssClass">
+  <mat-label>{{ label }}</mat-label>
+  <mat-select
+    [disabled]="isDisabled"
+    [ngModel]="value"
+    (ngModelChange)="onModelChange($event)"
+    [errorStateMatcher]="errorMatcher"
+  >
+    <cdk-virtual-scroll-viewport
+      #scroller
+      itemSize="48"
+      [style.height.px]="200"
+    >
+      @for (option of options; track option) {
+        <mat-option [value]="option.value">
+          {{ option.label }}
+        </mat-option>
+      }
+    </cdk-virtual-scroll-viewport>
+  </mat-select>
+
+  @if (errorMsg) {
+    <mat-error>
+      {{ errorMsg }}
+    </mat-error>
+  } @else if (ngControl && ngControl.errors) {
+    <mat-error>
+      @if (ngControl.hasError('required')) {
+        <ng-container i18n>Required</ng-container>
+      }
+    </mat-error>
+  }
+</mat-form-field>

@@ -1,0 +1,38 @@
+<div class="shell">
+  <vh-supergraphic class="shell__supergraphic" />
+  <vh-main class="shell__main">
+    <vh-header>
+      <vh-breadcrumb [breadcrumbs]="(breadcrumbs$ | async)!"></vh-breadcrumb>
+      <ng-container toolbar>
+        @if (numberOfNewVersions(); as numberOfNewVersions) {
+          @if (numberOfNewVersions > 0) {
+            <button mat-icon-button>
+              <mat-icon
+                color="warn"
+                fontIcon="bosch-ic-alert-warning-filled"
+                i18n-matTooltip
+                matTooltip="A new version is available. It is recommended to reload the page to get the latest version."
+                [matBadge]="numberOfNewVersions"
+              />
+            </button>
+          }
+        }
+        <vh-customer-context
+          [customers]="customers()"
+          [currentCustomer]="currentCustomer()"
+          (changeCustomer)="changeCustomer($event)"
+        />
+        <vh-notification ></vh-notification>
+        <vh-user-info
+          [isEnabledCheckForUpdate]="isEnabledCheckForUpdate"
+          [authState]="authState()"
+          (checkForUpdate)="checkForUpdate()"
+          (logout)="onLogout()"
+        />
+      </ng-container>
+    </vh-header>
+    <vh-sidenav></vh-sidenav>
+    <vh-footer></vh-footer>
+    <router-outlet></router-outlet>
+  </vh-main>
+</div>

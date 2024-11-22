@@ -1,0 +1,64 @@
+@use '../../../../../../../apps/vehicle-health/src/scss/abstracts/variables' as var;
+
+:host::ng-deep {
+  display: block;
+  overflow-x: auto;
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+.vehicle-diagnostic-table {
+  border-collapse: collapse;
+
+  tr[mat-header-row] {
+    position: unset;
+    height: 48px !important;
+  }
+
+  th[mat-header-cell] {
+    border: none;
+  }
+
+  tr[mat-header-row] td[mat-cell],
+  tr[mat-row] td[mat-cell] {
+    border-left: none;
+    border-right: none;
+    border-color: var.$bosch-grey-95;
+  }
+
+  tr.element-row {
+    background-color: var.$bosch-grey-95;
+  }
+
+  tr.detail-row {
+    height: 0 !important;
+    background-color: #f9f9fa;
+  }
+
+  th.status {
+    width: 10%;
+  }
+
+  .action-cell {
+    width: 0;
+  }
+
+  .spacing {
+    height: 0 !important;
+    td {
+      border-top: 0.5rem solid var.$bosch-white !important;
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 0;
+    }
+  }
+
+  .progress {
+    height: 0 !important;
+    td {
+      padding: 0;
+    }
+  }
+}

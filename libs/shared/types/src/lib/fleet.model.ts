@@ -1,0 +1,33 @@
+export interface FleetOverview {
+  vin: string;
+  lastUpdated?: Date | string;
+  lastSeen?: Date | string;
+  startTime?: Date | string;
+  status?: string;
+  source?: string;
+  dtcCode?: string;
+  oem?: string;
+  protocolStandard?: string;
+  name: string;
+  licensePlate: string;
+  manufacturerName: string;
+  modelLine: string;
+  engineType: string;
+  customer: string;
+  dtcTemplateId: string;
+  category?: string;
+  description?: string;
+  criticality?: string;
+  criticalityLevel: number;
+  symptom: string;
+  recommendations?: string[];
+  totalFaults: number;
+  odometer: number;
+  longitude: number | null;
+  latitude: number | null;
+  lastUpdatedFault?: string;
+  riskAvailabilityLevel: number;
+  riskDamageLevel: number;
+  riskEmissionsLevel: number;
+  riskSafetyLevel: number;
+}

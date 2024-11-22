@@ -1,0 +1,34 @@
+@if (item) {
+  @if (item.type === 'battery') {
+    @if (item.status === 'loading') {
+      <vh-skeleton-loading width="10rem" height="1rem" />
+    } @else if (item.status === 'loaded') {
+      @if (item.data.sohStatus !== 1) {
+        {{ item.data.timestamp | date: 'medium' }}
+      }
+    }
+  } 
+  @else if(item.type === 'powertrain-anomaly') {
+    @if (item.status === 'loading') {
+      <vh-skeleton-loading width="10rem" height="1rem" />
+    } @else if (item.status === 'loaded') {
+      <div class="anomaly-timestamp-item">
+        @if (item.data.coolantStatus !== 0) {
+          {{ item.data.coolantTimestamp | date: 'medium' }}
+        }
+      </div>
+      <div class="anomaly-timestamp-item">
+        @if (item.data.oilStatus !== 0) {
+          {{ item.data.oilTimestamp | date: 'medium' }}
+        }
+      </div>
+    }
+  }
+  @else if (item.type === 'dtcTemplate') {
+    @if (item.status === 'loading') {
+      <vh-skeleton-loading width="1.5rem" height="1.5rem" />
+    } @else if (item.status === 'loaded') {
+      <vh-criticality [value]="item.data.criticality" />
+    }
+  }
+}

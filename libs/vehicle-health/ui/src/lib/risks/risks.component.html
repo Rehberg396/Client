@@ -1,0 +1,44 @@
+@if (risks) {
+  <div class="risks">
+    <mat-icon
+      fontIcon="bosch-ic-security-check"
+      i18n-matTooltip
+      [matTooltip]="
+        'Risk of danger for driver: ' +
+        (risks.riskSafetyLevel | riskLevelCategory)
+      "
+      [style.color]="risks.riskSafetyLevel | riskLevelColor"
+    >
+    </mat-icon>
+    <mat-icon
+      fontIcon="bosch-ic-engine-diagnosis"
+      i18n-matTooltip
+      [matTooltip]="
+        'Risk for further damage of vehicle components: ' +
+        (risks.riskDamageLevel | riskLevelCategory)
+      "
+      [style.color]="risks.riskDamageLevel | riskLevelColor"
+    >
+    </mat-icon>
+    <mat-icon
+      fontIcon="bosch-ic-car-mechanic"
+      i18n-matTooltip
+      [matTooltip]="
+        'Risk, that vehicle can not be driven further: ' +
+        (risks.riskAvailabilityLevel | riskLevelCategory)
+      "
+      [style.color]="risks.riskAvailabilityLevel | riskLevelColor"
+    >
+    </mat-icon>
+    <mat-icon
+      fontIcon="bosch-ic-exhaust-pipe"
+      i18n-matTooltip
+      [matTooltip]="
+        'Impact on environment due to increased emissions: ' +
+        (risks.riskEmissionsLevel | riskLevelCategory)
+      "
+      [style.color]="risks.riskEmissionsLevel | riskLevelColor"
+    >
+    </mat-icon>
+  </div>
+}

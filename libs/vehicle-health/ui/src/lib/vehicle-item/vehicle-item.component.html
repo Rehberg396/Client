@@ -1,0 +1,17 @@
+<div class="item">
+  <div class="item__name" [class.item__name--important]="isImportant">
+    <ng-content select="[name]"></ng-content>
+  </div>
+  <div class="item__value">
+    @if (isLoading) {
+      <vh-skeleton-loading height="2rem" theme="margin: 4px" />
+    } @else {
+      @if (isImportant) {
+        <mat-chip class="chip">
+          <ng-content select="[important]"></ng-content>
+        </mat-chip>
+      }
+      <ng-content select="[value]"></ng-content>
+    }
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="error-dialog__wrapper">
+  <div class="error-dialog__header">
+    <div class="error-dialog__title">{{ data.title }}</div>
+    <div class="error-dialog__close">
+      <mat-icon fontIcon="bosch-ic-close" (click)="onClose()"> </mat-icon>
+    </div>
+  </div>
+  <hr class="error-dialog__divider" />
+  <div class="error-dialog__content">
+    @if (data.contentMessage; as message) {
+      <div class="error-dialog__content-message">
+        {{ message }}
+      </div>
+    }
+  </div>
+  <div class="error-dialog__actions">
+    <vh-button buttonType="button" type="primary" (click)="onClose()" i18n>
+      Close
+    </vh-button>
+  </div>
+</div>
